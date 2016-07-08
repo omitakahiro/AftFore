@@ -1,0 +1,16 @@
+---------------------------
+AftFore Documentation
+---------------------------
+
+:mod:`AftFore` is a python module for generating aftershock forecasts based on the method proposed in *Omi et al.*, (2013). Especially :mod:`AftFore` aims to improve the forecasts at the early stage (e.g. from the first few hours to the few days after the main shock).
+
+.. toctree::
+    :maxdepth: 2
+    :numbered:
+    
+    overview
+    userguide
+
+:contact: Takahiro Omi (omi[at]sat.t.u-tokyo.ac.jp)
+    
+    https://sites.google.com/site/omitakahiro/home-english

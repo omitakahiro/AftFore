@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. User Guide &mdash; AftFore 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="AftFore 1.0 documentation" href="index.html" />
+    <link rel="prev" title="1. Overview" href="overview.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="1. Overview"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AftFore 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. User Guide</a><ul>
+<li><a class="reference internal" href="#set-up">2.1. Set up</a><ul>
+<li><a class="reference internal" href="#requirements">2.1.1. Requirements</a></li>
+<li><a class="reference internal" href="#download">2.1.2. Download</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-preparation">2.2. Data Preparation</a></li>
+<li><a class="reference internal" href="#program-workflow">2.3. Program Workflow</a></li>
+<li><a class="reference internal" href="#quick-start">2.4. Quick Start</a></li>
+<li><a class="reference internal" href="#code-examples">2.5. Code Examples</a><ul>
+<li><a class="reference internal" href="#parameter-estimation">2.5.1. Parameter Estimation</a></li>
+<li><a class="reference internal" href="#forecast-generation">2.5.2. Forecast Generation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aftfore-reference">2.6. AftFore Reference</a><ul>
+<li><a class="reference internal" href="#function">2.6.1. Function</a></li>
+<li><a class="reference internal" href="#object">2.6.2. Object</a></li>
+<li><a class="reference internal" href="#generated-files">2.6.3. Generated Files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="overview.html"
+                        title="previous chapter">1. Overview</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/userguide.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-AftFore">
+<span id="user-guide"></span><h1>2. User Guide<a class="headerlink" href="#module-AftFore" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="set-up">
+<h2>2.1. Set up<a class="headerlink" href="#set-up" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="requirements">
+<h3>2.1.1. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p><a class="reference internal" href="#module-AftFore" title="AftFore"><code class="xref py py-mod docutils literal"><span class="pre">AftFore</span></code></a> depends on the following external packages:</p>
+<ul class="simple">
+<li>Python 2.7 or 3.4</li>
+<li>Numpy</li>
+<li>Scipy</li>
+<li>Matplotlib</li>
+</ul>
+<p>Please see <a class="reference external" href="https://www.scipy.org/install.html">Installing the SciPy Stack</a> for installing Numpy, Scipy, and Matplotlib.</p>
+</div></blockquote>
+</div>
+<div class="section" id="download">
+<h3>2.1.2. Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>A souce code is available at <a class="reference external" href="https://github.com/omitakahiro/AftFore/">https://github.com/omitakahiro/AftFore/</a>.</p>
+<p>Please see the below figure to download the zipped source file. After unzipping the downloaded file, please put the AftFore folder (in the unzipped folder) to your working directory.</p>
+<a class="reference internal image-reference" href="_images/github.jpg"><img alt="_images/github.jpg" src="_images/github.jpg" style="width: 800px;" /></a>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="data-preparation">
+<h2>2.2. Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>A data file is an ascii file that contains the list of the relative time after the main shock [day] (the first column) and magnitude (the second column) of the main shock and its aftershocks. A sample aftershock data of the 1995 Kobe earthquake of M7.3 is included in the source file (./AftFore/Kobe.txt).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The first event is identified as the main shock, and the time of the main shock must be set to 0.</p>
+</div>
+<p>A data file is like:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>0.000000 7.3
+0.001652 4.4
+0.001890 4.2
+0.002048 4.5
+0.002455 5.2
+0.002933 3.8
+0.003422 4.2
+0.003651 4.0
+0.004033 3.3
+0.004396 5.0
+0.005003 3.6
+0.005305 3.8
+0.012113 3.2
+0.012714 3.1
+0.012822 3.8
+...
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="program-workflow">
+<h2>2.3. Program Workflow<a class="headerlink" href="#program-workflow" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/scheme.jpg"><img alt="_images/scheme.jpg" class="align-center" src="_images/scheme.jpg" style="width: 600px;" /></a>
+<p>The forecast procedure consists of two steps.</p>
+<ol class="arabic">
+<li><div class="first line-block">
+<div class="line">The model parameters are estimated from the aftershock data in the learning period, done by a function <a class="reference internal" href="#AftFore.Est" title="AftFore.Est"><code class="xref py py-func docutils literal"><span class="pre">Est()</span></code></a>. We here use the prior probability distribution for the Bayesian estimation, which is set to be the default values used in <em>Omi et al.,</em> (2016) unless otherwise set.</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">The forecast for the testing period is produced based on the estimated parameter sets, done by a function <a class="reference internal" href="#AftFore.Fore" title="AftFore.Fore"><code class="xref py py-func docutils literal"><span class="pre">Fore()</span></code></a>.</div>
+</div>
+</li>
+</ol>
+<p>A function <a class="reference internal" href="#AftFore.EstFore" title="AftFore.EstFore"><code class="xref py py-func docutils literal"><span class="pre">EstFore()</span></code></a> performs the both two tasks and provides a simple way to produce the forecasts. If the user just wants to generate a forecast, <a class="reference internal" href="#AftFore.EstFore" title="AftFore.EstFore"><code class="xref py py-func docutils literal"><span class="pre">EstFore()</span></code></a> is enough. The user may use <a class="reference internal" href="#AftFore.Est" title="AftFore.Est"><code class="xref py py-func docutils literal"><span class="pre">Est()</span></code></a> or <a class="reference internal" href="#AftFore.Fore" title="AftFore.Fore"><code class="xref py py-func docutils literal"><span class="pre">Fore()</span></code></a> for the advanced purpose.</p>
+</div></blockquote>
+</div>
+<div class="section" id="quick-start">
+<h2>2.4. Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before running the code, the user needs to (1) put the downloaded AftFore folder in your working directory and (2) prepare the data file.</p>
+</div>
+<p>The below code shows the simplest way to generate a forecast by using <a class="reference internal" href="#AftFore.EstFore" title="AftFore.EstFore"><code class="xref py py-func docutils literal"><span class="pre">EstFore()</span></code></a>. The parameters that the user has to set are <a class="reference internal" href="#var-t_learn"><code class="xref std std-var docutils literal"><span class="pre">t_learn</span></code></a> (the range of the learning period), <a class="reference internal" href="#var-t_test"><code class="xref std std-var docutils literal"><span class="pre">t_test</span></code></a> (the range of the testing period), and <a class="reference internal" href="#var-Data"><code class="xref std std-var docutils literal"><span class="pre">Data</span></code></a> (the path of the data file). For example, this code uses the data file &#8216;./AftFore/Kobe.txt&#8217; and  generates a forecast for the testing period [1.0, 2.0] (day) based on the data in the learning period [0.0, 1.0] (day). The estimation is carried out with the default prior probability distribution. See <a class="reference internal" href="#var-prior"><code class="xref std std-var docutils literal"><span class="pre">prior</span></code></a> for a method to customize the prior.</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">AftFore</span> <span class="kn">as</span> <span class="nn">aft</span>
+
+<span class="n">t_learn</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>            <span class="c1"># The range of the learning period [day].</span>
+<span class="n">t_test</span>  <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>            <span class="c1"># The range of the testing period [day].</span>
+<span class="n">Data</span>    <span class="o">=</span> <span class="s1">&#39;./AftFore/Kobe.txt&#39;</span>  <span class="c1"># The path of the date file</span>
+
+<span class="n">aft</span><span class="o">.</span><span class="n">EstFore</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span><span class="n">t_learn</span><span class="p">,</span><span class="n">t_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This process takes about a few minutes. The forecast result (the number of earthquakes with <span class="math">\(M&gt;M_t\)</span> in the testing period) is saved in <a class="reference internal" href="#var-fore.txt"><code class="xref std std-var docutils literal"><span class="pre">fore.txt</span></code></a>.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span># (M_t) (expected_number) (lower bound of 95% interval) (upper bound of 95% interval)
+0.95         682.218         595         816
+1.05         576.029         502         686
+1.15         486.368         424         578
+1.25         410.664         357         488
+1.35         346.743         301         412
+1.45         292.772         253         348
+1.55         247.201         212         295
+1.65         208.723         178         250
+1.75         176.235         149         212
+1.85         148.804         124         180
+1.95         125.642         103         153
+...
+</pre></div>
+</div>
+<p><a class="reference internal" href="#AftFore.EstFore" title="AftFore.EstFore"><code class="xref py py-func docutils literal"><span class="pre">EstFore()</span></code></a> also generates files, <a class="reference internal" href="#var-param.pkl"><code class="xref std std-var docutils literal"><span class="pre">param.pkl</span></code></a>, <a class="reference internal" href="#var-param.pdf"><code class="xref std std-var docutils literal"><span class="pre">param.pdf</span></code></a>, and <a class="reference internal" href="#var-fore.pdf"><code class="xref std std-var docutils literal"><span class="pre">fore.pdf</span></code></a>. See <a class="reference internal" href="#genfiles"><span class="std std-ref">Generated Files</span></a> for the details.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference internal" href="#AftFore.EstFore" title="AftFore.EstFore"><code class="xref py py-func docutils literal"><span class="pre">EstFore()</span></code></a> may raise some warnings, but the user does not have to care about this for the most cases.</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="code-examples">
+<h2>2.5. Code Examples<a class="headerlink" href="#code-examples" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The user needs to import AftFore at first before running the following examples.</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">AftFore</span> <span class="kn">as</span> <span class="nn">aft</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="parameter-estimation">
+<span id="paraest"></span><h3>2.5.1. Parameter Estimation<a class="headerlink" href="#parameter-estimation" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The parameter estimation is carried out by <a class="reference internal" href="#AftFore.Est" title="AftFore.Est"><code class="xref py py-func docutils literal"><span class="pre">Est()</span></code></a>. Here the estimation is carried out under the defalut prior probability distribution. See <a class="reference internal" href="#var-prior"><code class="xref std std-var docutils literal"><span class="pre">prior</span></code></a> for a method to customize the prior.</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="n">t_learn</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>            <span class="c1"># The range of the learning period [day].</span>
+<span class="n">Data</span>    <span class="o">=</span> <span class="s1">&#39;./AftFore/Kobe.txt&#39;</span>  <span class="c1"># The path of the date file</span>
+
+<span class="n">param</span> <span class="o">=</span> <span class="n">aft</span><span class="o">.</span><span class="n">Est</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span><span class="n">t_learn</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#AftFore.Est" title="AftFore.Est"><code class="xref py py-func docutils literal"><span class="pre">Est()</span></code></a> returns a parameter object <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> that contains the estimated parameter values and other information, which will be used for producing forecasts. <a class="reference internal" href="#AftFore.Est" title="AftFore.Est"><code class="xref py py-func docutils literal"><span class="pre">Est()</span></code></a> also generates: <a class="reference internal" href="#var-param.pkl"><code class="xref std std-var docutils literal"><span class="pre">param.pkl</span></code></a> (a pickle file that saves <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a>) and <a class="reference internal" href="#var-param.pdf"><code class="xref std std-var docutils literal"><span class="pre">param.pdf</span></code></a> (a figure summarizing the estimated parameters).</p>
+<p>The <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> can be loaded from <a class="reference internal" href="#var-param.pkl"><code class="xref std std-var docutils literal"><span class="pre">param.pkl</span></code></a>.</p>
+<div class="highlight-Python" id="pickle"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="n">param</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;param.pkl&#39;</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="forecast-generation">
+<h3>2.5.2. Forecast Generation<a class="headerlink" href="#forecast-generation" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The forecast is produced using the estimated parameter sets <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> by <a class="reference internal" href="#AftFore.Fore" title="AftFore.Fore"><code class="xref py py-func docutils literal"><span class="pre">Fore()</span></code></a>.</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="n">t_test</span>  <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>            <span class="c1"># The range of the testing period [day].</span>
+
+<span class="n">aft</span><span class="o">.</span><span class="n">Fore</span><span class="p">(</span><span class="n">param</span><span class="p">,</span><span class="n">t_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#AftFore.Fore" title="AftFore.Fore"><code class="xref py py-func docutils literal"><span class="pre">Fore()</span></code></a> generates <a class="reference internal" href="#var-fore.txt"><code class="xref std std-var docutils literal"><span class="pre">fore.txt</span></code></a> and <a class="reference internal" href="#var-fore.pdf"><code class="xref std std-var docutils literal"><span class="pre">fore.pdf</span></code></a> that summarize the forecast result.</p>
+<p>The user may want to compare the forecast with the observation. By setting a keyword <em>Data_test</em> to the path of the data file, the observation in the testing period is plotted in <a class="reference internal" href="#var-fore.pdf"><code class="xref std std-var docutils literal"><span class="pre">fore.pdf</span></code></a>. See <a class="reference internal" href="#var-fore.pdf"><code class="xref std std-var docutils literal"><span class="pre">fore.pdf</span></code></a> for the detail.</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="n">t_test</span>  <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>             <span class="c1"># The range of the testing period [day].</span>
+<span class="n">Data_test</span> <span class="o">=</span> <span class="s1">&#39;./AftFore/Kobe.txt&#39;</span> <span class="c1"># The path of the data file including the data in the testing period</span>
+
+<span class="n">aft</span><span class="o">.</span><span class="n">Fore</span><span class="p">(</span><span class="n">param</span><span class="p">,</span><span class="n">t_test</span><span class="p">,</span><span class="n">Data_test</span><span class="o">=</span><span class="n">Data_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="aftfore-reference">
+<h2>2.6. AftFore Reference<a class="headerlink" href="#aftfore-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="function">
+<h3>2.6.1. Function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="function">
+<dt id="AftFore.Est">
+<code class="descclassname">AftFore.</code><code class="descname">Est</code><span class="sig-paren">(</span><em>Data</em>, <em>t_learn</em>, <em>prior=None</em><span class="sig-paren">)</span><a class="headerlink" href="#AftFore.Est" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keywords:</th><td class="field-body">If <em>prior</em> is <em>None</em>, the default prior probability distribution is used for the estimation. See <a class="reference internal" href="#var-prior"><code class="xref std std-var docutils literal"><span class="pre">prior</span></code></a> for a method to customize the prior.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Generates:</th><td class="field-body"><a class="reference internal" href="#var-param.pkl"><code class="xref std std-var docutils literal"><span class="pre">param.pkl</span></code></a> and <a class="reference internal" href="#var-param.pdf"><code class="xref std std-var docutils literal"><span class="pre">param.pdf</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="AftFore.Fore">
+<code class="descclassname">AftFore.</code><code class="descname">Fore</code><span class="sig-paren">(</span><em>param</em>, <em>t_test</em>, <em>Data_test=None</em><span class="sig-paren">)</span><a class="headerlink" href="#AftFore.Fore" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keywords:</th><td class="field-body">If a keywrod <em>Data_test</em> is set to the path of the data file, the observation in the test period is added in the <a class="reference internal" href="#var-fore.pdf"><code class="xref std std-var docutils literal"><span class="pre">fore.pdf</span></code></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Generates:</th><td class="field-body"><a class="reference internal" href="#var-fore.txt"><code class="xref std std-var docutils literal"><span class="pre">fore.txt</span></code></a> and <a class="reference internal" href="#var-fore.pdf"><code class="xref std std-var docutils literal"><span class="pre">fore.pdf</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="AftFore.EstFore">
+<code class="descclassname">AftFore.</code><code class="descname">EstFore</code><span class="sig-paren">(</span><em>Data</em>, <em>t_learn</em>, <em>t_test</em>, <em>prior=None</em><span class="sig-paren">)</span><a class="headerlink" href="#AftFore.EstFore" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keywords:</th><td class="field-body">If <em>prior</em> is <em>None</em>, the default prior probability distribution is used for the estimation. See <a class="reference internal" href="#var-prior"><code class="xref std std-var docutils literal"><span class="pre">prior</span></code></a> for a method to customize the prior.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Generates:</th><td class="field-body"><a class="reference internal" href="#var-param.pkl"><code class="xref std std-var docutils literal"><span class="pre">param.pkl</span></code></a>, <a class="reference internal" href="#var-param.pdf"><code class="xref std std-var docutils literal"><span class="pre">param.pdf</span></code></a>, <a class="reference internal" href="#var-fore.txt"><code class="xref std std-var docutils literal"><span class="pre">fore.txt</span></code></a>, and <a class="reference internal" href="#var-fore.pdf"><code class="xref std std-var docutils literal"><span class="pre">fore.pdf</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="object">
+<h3>2.6.2. Object<a class="headerlink" href="#object" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="var">
+<dt id="var-t_learn">
+<code class="descname">t_learn</code><a class="headerlink" href="#var-t_learn" title="Permalink to this definition">¶</a></dt>
+<dd><p>[float, float]</p>
+<p>The lower and upper range of the leraning period. The unit is &#8216;day&#8217;.</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="var-t_test">
+<code class="descname">t_test</code><a class="headerlink" href="#var-t_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>[float, float]</p>
+<p>The lower and upper range of the testing period. The unit is &#8216;day&#8217;.</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="var-Data">
+<code class="descname">Data</code><a class="headerlink" href="#var-Data" title="Permalink to this definition">¶</a></dt>
+<dd><p>string</p>
+<p>The path of the data file</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="var-param">
+<code class="descname">param</code><a class="headerlink" href="#var-param" title="Permalink to this definition">¶</a></dt>
+<dd><p>A parameter object</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="var-prior">
+<code class="descname">prior</code><a class="headerlink" href="#var-prior" title="Permalink to this definition">¶</a></dt>
+<dd><p>A prior object (optional: the default prior is used unless otherwise set)</p>
+<p>The user can introduce the prior for the parameters {<span class="math">\(K,p,c,\beta,\sigma,\mu1\)</span>} (Please see <a class="reference external" href="./method.pdf">here</a> for the detail of each parameter). A prior object is a list where each element defines the prior probability distribution of each parameter. A prior probability distribution of each parameter is specified by a list <em>[para_name,prior_type,mu,sigma]</em>.</p>
+<blockquote>
+<div><p><strong>para_name</strong>: string</p>
+<blockquote>
+<div>A name of the parameter (string) from {&#8216;k&#8217;,&#8217;p&#8217;,&#8217;c&#8217;,&#8217;beta&#8217;,&#8217;sigma&#8217;,&#8217;mu1&#8217;}</div></blockquote>
+<p><strong>para_type</strong>: string</p>
+<blockquote>
+<div><p>A probability distribution function from the below list</p>
+<p>&#8216;n&#8217;: the normal distribution <span class="math">\(p(x)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp[-\frac{(x-\mu)^2}{2\sigma^2}]\)</span></p>
+<p>&#8216;ln&#8217;: the log-normal distribution <span class="math">\(p(x)=\frac{1}{x\sqrt{2\pi\sigma^2}}\exp[-\frac{(\ln(x)-\mu)^2}{2\sigma^2}]\)</span></p>
+<p>&#8216;f&#8217;: the Dirac&#8217;s delta <span class="math">\(p(x)=\delta(x-\mu)\)</span>  (This prior fixes a given parameter to be <span class="math">\(\mu\)</span>)</p>
+</div></blockquote>
+<dl class="docutils">
+<dt><strong>mu</strong>: float</dt>
+<dd>the <span class="math">\(\mu\)</span>-value of the prior probability distribution function</dd>
+<dt><strong>sigma</strong>: float</dt>
+<dd>the <span class="math">\(\sigma\)</span>-value of the prior probability distribution function. Set <em>sigma</em> to 0, if <em>&#8216;f&#8217;</em> is chosen for <em>para_type</em>.</dd>
+</dl>
+</div></blockquote>
+<p>For example, if the user want to use the normal distribution with <span class="math">\(\mu=2.0\)</span> and <span class="math">\(\sigma=0.5\)</span> as the prior of the parameter <span class="math">\(\beta\)</span>, the prior object is given as:</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="n">prior</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>The user can introduce the prior for multiple parameters. The below code is the setting of the default prior.</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">prior</span> <span class="o">=</span><span class="p">[]</span>
+<span class="n">prior</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="mf">0.85</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">10.0</span><span class="p">),</span><span class="mf">0.15</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)])</span>
+<span class="n">prior</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="mf">1.05</span><span class="p">,</span><span class="mf">0.13</span><span class="p">])</span>
+<span class="n">prior</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;ln&#39;</span><span class="p">,</span><span class="o">-</span><span class="mf">4.02</span><span class="p">,</span><span class="mf">1.42</span><span class="p">])</span>
+<span class="n">prior</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;sigma&#39;</span><span class="p">,</span><span class="s1">&#39;ln&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span><span class="mf">1.0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Finally the prior object is passed to the keyword argument <em>prior</em> in <a class="reference internal" href="#AftFore.Est" title="AftFore.Est"><code class="xref py py-func docutils literal"><span class="pre">Est()</span></code></a> or <a class="reference internal" href="#AftFore.EstFore" title="AftFore.EstFore"><code class="xref py py-func docutils literal"><span class="pre">EstFore()</span></code></a>.</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="n">aft</span><span class="o">.</span><span class="n">EstFore</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span><span class="n">t_lean</span><span class="p">,</span><span class="n">t_test</span><span class="p">,</span><span class="n">prior</span><span class="o">=</span><span class="n">prior</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When the user uses the customized prior, it is strongly recommended to introduce a prior for the <span class="math">\(\sigma\)</span>-parameter for the computational stability. For example, the prior [&#8216;sigma&#8217;,&#8217;ln&#8217;,np.log(0.2),1.0] is used for the <span class="math">\(\sigma\)</span>-parameter in the default prior.</p>
+</div>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="generated-files">
+<span id="genfiles"></span><h3>2.6.3. Generated Files<a class="headerlink" href="#generated-files" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="var">
+<dt id="var-param.pkl">
+<code class="descname">param.pkl</code><a class="headerlink" href="#var-param.pkl" title="Permalink to this definition">¶</a></dt>
+<dd><p>A pickle file that stores a parameter object <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a>. See <a class="reference internal" href="#paraest"><span class="std std-ref">Parameter Estimation</span></a> for the method to retrive <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> from the pickle file.</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="var-param.pdf">
+<code class="descname">param.pdf</code><a class="headerlink" href="#var-param.pdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>A figure showing (1) the MT plot superinposed with the time-varying magnitude of 50% detection rate and (2) the scatter plot matrix of the estimated parameter sets (red dots: MAP parameter values, gray dots: sampled parameter sets).</p>
+<a class="reference internal image-reference" href="_images/mu.jpg"><img alt="_images/mu.jpg" src="_images/mu.jpg" style="height: 380px;" /></a>
+<a class="reference internal image-reference" href="_images/sm.jpg"><img alt="_images/sm.jpg" src="_images/sm.jpg" style="width: 400px;" /></a>
+</dd></dl>
+
+<dl class="var">
+<dt id="var-fore.txt">
+<code class="descname">fore.txt</code><a class="headerlink" href="#var-fore.txt" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the target magnitude <span class="math">\(M_t\)</span>, the expected number of earthquakes in the testing period with <span class="math">\(M&gt;M_t\)</span>, and its 95% confidencial interval.</p>
+</dd></dl>
+
+<div class="highlight-none"><div class="highlight"><pre><span></span># (M_t) (expected_number) (lower bound of 95% interval) (upper bound of 95% interval)
+0.95         682.218         595         816
+1.05         576.029         502         686
+1.15         486.368         424         578
+1.25         410.664         357         488
+1.35         346.743         301         412
+1.45         292.772         253         348
+1.55         247.201         212         295
+1.65         208.723         178         250
+1.75         176.235         149         212
+1.85         148.804         124         180
+1.95         125.642         103         153
+...
+</pre></div>
+</div>
+<dl class="var">
+<dt id="var-fore.pdf">
+<code class="descname">fore.pdf</code><a class="headerlink" href="#var-fore.pdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>A figure showing the forecast result.</p>
+<a class="reference internal image-reference" href="_images/fore1.jpg"><img alt="_images/fore1.jpg" src="_images/fore1.jpg" style="width: 450px;" /></a>
+<p>If a keyword <em>Data_test</em> is set in <a class="reference internal" href="#AftFore.Fore" title="AftFore.Fore"><code class="xref py py-func docutils literal"><span class="pre">Fore()</span></code></a>, the observation in the testing period is added.</p>
+<a class="reference internal image-reference" href="_images/fore2.jpg"><img alt="_images/fore2.jpg" src="_images/fore2.jpg" style="width: 450px;" /></a>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="1. Overview"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AftFore 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Takahiro Omi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.3.
+    </div>
+  </body>
+</html>

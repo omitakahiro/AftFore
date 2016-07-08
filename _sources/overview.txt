@@ -1,0 +1,29 @@
+---------------------
+Overview
+---------------------
+    A forecasting method employed in :mod:`AftFore` is based on Omi et al., (2013, 2014, 2015, 2016). :mod:`AftFore` uses the Omori-Utsu law for aftershock decay and the Gutenberg-Richter law for the magnitude-frequency relation as a forecast model. Specifically, the occurrence rate of earthquakes with magnitude :math:`M` at time :math:`t` after the main shock is modeled by 
+    
+    .. math:: \lambda(t,M) = \frac{K}{(t+c)^p}\beta e^{-\beta(M-M_0)},
+    
+    where :math:`K`, :math:`p`, :math:`c`, and :math:`\beta` are parameters, and :math:`M_0` represents the main shock magnitude. To generate forecasts tailored to a target aftershock sequence, :mod:`AftFore` estimates the model parameters directly from the data of the aftershock sequence in the learning period. The forecast takes the form of the expected number of earthquakes in the testing period with :math:`M>M_t` and its 95% confidencial interval for various :math:`M_t`.
+    
+    Although the above model has been commonly employed for aftershock forecasting, :mod:`AftFore` is unique in the following points, which makes the early aftershock forecasting feasible and robust.
+    
+    - | It is well known that many early aftershocks are not reported in hypocenter catalogs because of the overlapping of seismic waves from the main shocks and successive frequent aftershocks. Such data missing makes the estimation from early aftershock data particularly difficult. **To overcome this difficulty,** :mod:`AftFore` **statistically characterizes the data incompleteness by introducing the detection rate of aftershocks that depends on the time and magnitude** By combining the detection rate function and the above forecast model, the model parameters can be appropriately estimated from the incompletely recorded data.
+    
+    - | We usually use only a single set of parameter values (the "best" parameter set) for forecasting. However, if the model parameters are estimated from short-term aftershock data, such a forecast is often severely biased because the estimation accompanies the large uncertainty.  **Alternatively,** :mod:`AftFore` **combines forecasts from many probable parameter sets to appropriately consider the estimation uncertainty (Bayesian forecasting).** Specifically, the parameter sets are sampled from the posterior probability distribution by using the Markov Chain Monte Carlo method.
+    
+    Please refer to `here <./method.pdf>`_ for the technical detail.
+    
+    .. note::
+        - Anyone can use this code without permission, but any feedback is welcome.
+        - If you present results obtaind by using AftFore, please appropriately cite *Omi et al.*, (2013).
+        
+    **References**
+    
+    - T\. Omi, Y. Ogata, Y. Hirata, and K. Aihara, "Forecasting large aftershocks within one day after the main shock", Scientific Reports 3, 2218 (2013).
+    - T\. Omi, Y. Ogata, Y. Hirata, and K. Aihara, "Estimating the ETAS model from an early aftershock sequence", Geophysical Research Letters 41, 850 (2014). 
+    - T\. Omi, Y. Ogata, Y. Hirata, and K. Aihara, "Intermediate-term forecasting of aftershocks from an early aftershock sequence: Bayesian and ensemble forecasting approaches", Journal of Geophysical Research: Solid Earth 120, 2561 (2015).
+    - T\. Omi, Y. Ogata, K. Shiomi, K. Sawazaki, and K. Aihara, "Automatic aftershock forecasting -test using real-time seismicity data in Japan", Submitted to BSSA (2016).
+
+
