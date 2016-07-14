@@ -1,4 +1,4 @@
-This is a python package to generate aftershock forecasts based on a method proposed in *Omi et al.,* (2013). 
+AftFore is a python package to generate aftershock forecasts based on a method proposed in *Omi et al.,* (2013). 
 
 Anyone can use this code without permission, but please appropriately cite *Omi et al.,* (2013) if you present results obtained by using AftFore.
 
