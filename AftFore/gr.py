@@ -1,17 +1,18 @@
-import sys
-
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import matplotlib as mpl
+mpl.use('Agg')
+import matplotlib.pyplot as plt
+
 
 from scipy.stats import norm 
 from scipy import sparse
 import scipy.sparse.linalg as spla
 
-from StatTool import Quasi_Newton
-from catalog import load_Data
-
+try:
+    from .StatTool import Quasi_Newton
+except:
+    from StatTool import Quasi_Newton
 
 #####################################################
 ##GR and detection rate model with fixed parameters
@@ -40,7 +41,7 @@ def Estimate_GRDR(Data,t,prior=[],opt=[]):
     if 'fig' in opt:
         Graph_GRDR(para,Data,t)
     
-    return {'para':para, 'L':L, 'ste':ste, 'mag_top':mag_top, 't':t, 'prior':prior}
+    return {'para':para,'L':L,'ste':ste,'mag_top':mag_top,'t':t}
 
 def LG_GRDR(para,Data,cdt,only_L=False):
     
@@ -122,8 +123,8 @@ def Estimate_GRDR_SSM(Data,t,prior=[],opt=[]):
     #figure
     if 'fig' in opt:
         Graph_MT_mu(para,mu,Data,t)
-    
-    return {'para':para,  'mu':mu, 'L':L, 'ste':ste, 't':t, 'prior':prior}
+        
+    return {'para':para,'L':L,'ste':ste,'t':t,'mu':mu.copy()}
 
 def LG_GRDR_SSM(para,Data,cdt,only_L=False):
     
@@ -349,115 +350,6 @@ def d2_Lnormcdf(x):
     a=d_Lnormcdf(x)
     return -a*(a+x)
 
-#####################################################
-##Demo script
-#####################################################
-def demo_Estimate_GRDR():
-    Data = load_Data('Hyogo.txt')
-
-    prior =[]
-    prior.append(['beta', 'f', 1.8, 0.0])
-    prior.append(['sigma', 'ln',np.log(0.2), 0.1])
-    
-    t = {'st':1.0,'en':31.0}
-    opt = ['fig','check']
-
-    param = Estimate_GRDR(Data,t,prior,opt)
-    
-    print( param['para'] )
-    print( param['L'] )
-    print( param['ste'] )
-    print( param['mag_top'] )
-    
-def demo_Estimate_GRDR_SSM():
-    Data = load_Data('Hyogo.txt')
-
-    prior =[['beta','n',0.95*np.log(10.0),0.19*np.log(10.0)]]
-    t = {'st':0.0,'en':1.0}
-    opt = ['fig']
-
-    param = Estimate_GRDR_SSM(Data,t,prior,opt)
-    
-    print( param['para'][['beta','sigma','V']] )
-    print( param['L'] )
-    print( param['ste'] )
-
-def demo_rnd_GRDR():
-    para = {'beta':2.0, 'mu':2.0, 'sigma':0.2}
-    Data = pd.DataFrame(rnd_GRDR(100000,para),columns=['Mag'])
-    Data = Data_Eq(Data)
-    t = None
-    
-    param = Estimate_GRDR(Data,t,prior=[],opt=['fig'])
-
-    print( param['para'] )
-
-def demo_dtr():
-    beta = 2.0; mu = 2.0; sigma = 0.2;
-    para=pd.Series({'beta':beta,'mu':mu,'sigma':sigma})
-    
-    mag_min = np.arange(0.5,3.0,0.1)
-    dtr = [calc_dtr(para,x) for x in mag_min]
-    dtr_approx = [ np.exp(beta*(x-mu)+(beta*sigma)**2.0/2.0) for x in mag_min]
-    
-    plt.figure()
-    plt.clf()
-    plt.plot(mag_min,dtr,'k-')
-    plt.plot(mag_min,dtr_approx,'r-')
-    plt.yscale('log')
- 
-#####################################################
-##Test **Never change the script
-#####################################################
-def TEST_Estimate_GRDR():
-    Data = load_Data('Hyogo.txt')
-    prior =[]
-    t = {'st':1.0,'en':31.0}
-    opt = ['ste']
-
-    param = Estimate_GRDR(Data,t,prior,opt)
-    
-    print( param['para'] )
-    print( param['L'] )
-    print( param['ste'] )
-    print( param['mag_top'] )
-    
-    """OUTPUT
-    beta     1.973255
-    mu       1.364645
-    sigma    0.259381
-    dtype: float64
-    -1561.03602934
-    beta     0.065384
-    mu       0.024818
-    sigma    0.010192
-    dtype: float64
-    1.45
-    """
-    
-def TEST_Estimate_GRDR_SSM():
-    Data = load_Data('Hyogo.txt')
-    prior =[]
-    t = {'st':0.0,'en':1.0}
-    opt = ['ste','fig']
-
-    param = Estimate_GRDR_SSM(Data,t,prior,opt)
-    
-    print( param['para'][['beta','sigma','V']] )
-    print( param['L'] )
-    print( param['ste'] )
-    
-    """OUTPUT
-    V        5.454170e-07
-    beta     1.766985e+00
-    sigma    2.513334e-01
-    dtype: float64
-    -716.697706684
-    beta     9.190063e-02
-    sigma    1.875071e-02
-    V        4.782150e-07
-    dtype: float64
-    """
-
+##########################################################
 if __name__ == '__main__':
-    TEST_Estimate_GRDR()
+    pass

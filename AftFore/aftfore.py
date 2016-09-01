@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import matplotlib as mpl
+mpl.use('Agg')
+import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
 from scipy.special import gammaln
@@ -9,9 +10,14 @@ from scipy.stats import norm,poisson
 
 import sys,time,copy,pickle,datetime,subprocess
 
-from StatTool import Quasi_Newton,MCMC_prl
-from catalog import load_Data,parse_str
-import gr
+try:
+    from .StatTool import Quasi_Newton,MCMC_prl
+    from .catalog import load_dat
+    from . import gr
+except:
+    from StatTool import Quasi_Newton,MCMC_prl
+    from catalog import load_dat
+    import gr
 
 """
 model description:
@@ -54,7 +60,7 @@ def MCMC_OU_GRDR(Data,t,mag_ref,Num,n_core,prior=[],opt=[]):
     
     [para_mcmc,L_mcmc,dtl_mcmc] = MCMC_prl(LG_OU_GRDR,para_ini,Data,cdt,stg,Num,n_core,prior,opt)
     
-    return {'para_mcmc':para_mcmc,'L_mcmc':L_mcmc,'para':para_mcmc.iloc[0],'L':L_mcmc[0],'t':t,'mag_ref':mag_ref,'mu0':mu0,'ste':ste,'prior':prior,'dtl_mcmc':dtl_mcmc}
+    return {'para_mcmc':para_mcmc,'L_mcmc':L_mcmc,'para':para_mcmc.iloc[0],'L':L_mcmc[0],'t':t,'mag_ref':mag_ref,'mu0':mu0,'ste':ste,'dtl_mcmc':dtl_mcmc}
 
 #####################################################
 ##Estimation
@@ -90,7 +96,7 @@ def Estimate_OU_GRDR(Data,t,mag_ref,prior=[],opt=[]):
     #Quasi Newton
     [para,L,ste] = Quasi_Newton(LG_OU_GRDR,para,Data,cdt,stg,prior,opt)
     
-    return {'para':para,'L':L,'t':t,'mag_ref':mag_ref,'mu0':param_gr['mu'],'ste':ste,'prior':prior}
+    return {'para':para,'L':L,'t':t,'mag_ref':mag_ref,'mu0':param_gr['mu'],'ste':ste}
 
 
 def LG_OU_GRDR(para,Data,cdt,only_L=False):
@@ -129,8 +135,7 @@ def Int_OU_GRDR(para,Data,cdt,only_L=False):
     
     t = cdt['t']; mag_ref = cdt['mag_ref']; mu0 = cdt['mu0'];
     #T= Data.search({'t':t})['T'].values
-    #T = Data['T'].values
-    T= Data[ (t['st']<Data['T']) & (Data['T']<t['en']) ]['T'].values
+    T= Data['T'].values
     st_bin = np.append(t['st'],T); en_bin = np.append(T,t['en']); t_bin = {'st':st_bin,'en':en_bin};
     
     [int_GRDR, d_int_GRDR] = Int_GRDR(para,cdt,only_L)
@@ -161,8 +166,7 @@ def Sum_GRDR(para,Data,cdt,only_L=False):
     t = cdt['t']; mag_ref = cdt['mag_ref']; mu0 = cdt['mu0'];
     beta = para['beta']; mu = mu0 + para['mu1']; sigma = para['sigma'];
     #Mag = Data.search({'t':t})['Mag'].values
-    #Mag = Data['Mag'].values
-    Mag = Data[ (t['st']<Data['T']) & (Data['T']<t['en']) ]['Mag'].values
+    Mag = Data['Mag'].values
     n_Mag = (Mag-mu)/sigma
         
     Sum = ( np.log(beta) - beta*(Mag-mag_ref) + np.log( norm.cdf(n_Mag) ) ).sum()
@@ -195,8 +199,7 @@ def Sum_OU(para,Data,t,only_L=False):
     
     k = para['k']; p = para['p']; c = para['c'];
     #T= Data.search({'t':t})['T'].values
-    #T = Data['T'].values
-    T= Data[ (t['st']<Data['T']) & (Data['T']<t['en']) ]['T'].values
+    T= Data['T'].values
     n = len(T)
     
     #Sum
@@ -303,7 +306,7 @@ def calc_CumPredDist(para,mag_ref,t):
     for i,l in enumerate(c_cum_exp):
         curve_map[i] = l[0]
         curve_95[:,i] = calc_95range(l)
-    
+     
     pred = pd.DataFrame({'mag':mag,'expected_num':curve_map,'lower_bound':curve_95[0],'upper_bound':curve_95[1]})
     
     return pred
@@ -353,14 +356,12 @@ def calc_95range(l):
 #####################################################
 ##Graph
 #####################################################
-def Graph_dr(Data,param,xlim=None,ylim=None,newfig=True,pdf=False):
+def Graph_dr(Data,mu,t,para,xlim=None,ylim=None,newfig=True,pdf=False):
     
-    [beta,mu1,sigma] = param['para'][['beta','mu1','sigma']].values
-    t = param['t']
-    mu = param['para']['mu1'] + param['mu0']
+    [beta,mu1,sigma] = para[['beta','mu1','sigma']].values
     [T,Mag] = Data.search({'t':t})[['T','Mag']].values.T
     ylim = [Mag.min()-1.0,Mag.max()+1.0] if ylim is None else ylim
-    
+
     if newfig is True:
         plt.figure(figsize=(8.27,11.69))
         plt.clf()
@@ -395,7 +396,7 @@ def Graph_dr(Data,param,xlim=None,ylim=None,newfig=True,pdf=False):
         else:
             plt.savefig(pdf)
 
-def Graph_param(param,newfig=True,pdf=False):
+def Graph_param(para_mcmc,newfig=True,pdf=False):
     
     if newfig is True:
         fig = plt.figure(figsize=(6,6))
@@ -407,7 +408,7 @@ def Graph_param(param,newfig=True,pdf=False):
         mpl.rc('ytick.major',width=1)
         mpl.rc('ytick.minor',width=1)
     
-    p = param['para_mcmc'].copy()
+    p = para_mcmc.copy()
     p['log(k)'] = np.log(p['k'])
     p['log(c)'] = np.log(p['c'])
     p['log(sigma)'] = np.log(p['sigma'])
@@ -443,8 +444,7 @@ def Graph_pred(pred,param,t_test,xlim=None,ylim=None,newfig=True,pdf=False):
     y_e1[y_e1<1] = 0.8; y_e2[y_e2<1] = 0.8;
     
     if newfig is True:
-        plt.figure(figsize=(8.27,11.69))
-        plt.clf()
+        fig = plt.figure(figsize=(8.27,11.69))
         mpl.rc('font', size=12, family='Arial')
         mpl.rc('axes',linewidth=1,titlesize=12)
         mpl.rc('pdf',fonttype=42)
@@ -457,13 +457,10 @@ def Graph_pred(pred,param,t_test,xlim=None,ylim=None,newfig=True,pdf=False):
     plt.fill_between(x_e,y_e1,y_e2,facecolor='r',linewidth=0,alpha=0.2)
     
     if 'expected_num_generic' in pred.columns:
-        plt.plot(mag+0.05,pred['expected_num_generic'],'g-',label='generic model')
+        plt.plot(mag+0.05,pred['expected_num_generic'],'g-')
     
-    if 'c_obs1' in pred.columns:
-        plt.plot(mag+0.05,pred['c_obs1'],'ko',label='Hi-net')
-        
-    if 'c_obs2' in pred.columns:
-        plt.plot(mag,pred['c_obs2'],'ks',mfc='w',label='JMA')
+    if 'c_obs' in pred.columns:
+        plt.plot(mag+0.05,pred['c_obs'],'ko',label='observed',markersize=3)
         
     plt.xlabel('magnitude')
     plt.ylabel('cumulative number')
@@ -483,167 +480,70 @@ def Graph_pred(pred,param,t_test,xlim=None,ylim=None,newfig=True,pdf=False):
             plt.savefig(pdf)
 
 #####################################################
-## Tool for real-time analysis
+## Wrapper
 #####################################################
-class RT_Tool():
+def EstFore(Data,t_learn,t_test,prior=None):
+    param = Est(Data,t_learn,prior=prior)
+    Fore(param,t_test)
     
-    def parse_str(self,s):
-        return parse_str(s)
-    
-    def prepare_data(self,f_catalog,ms,alpha,xy,duration,prefix):
-        
-        Data = load_Data(f_catalog)
-        Data.plot_map(ms=ms,aftzone=True,pdf='%s_hypo_check.pdf'%prefix)
-        [Data_seq,xy] = Data.extract_aft(ms,alpha=alpha,xy=xy,duration=duration)
-        Data_seq.plot_map(ms=ms,txm=xy,pdf='%s_hypo.pdf'%prefix)
-        Data_seq.plot_mt_aft(pdf='%s_mt.pdf'%prefix)
-        Data_seq.save_Data('%s_aft.dat'%prefix)
-        
-        dtl = {'ms':ms, 'alpha':alpha, 'Catalog':Data, 'Data':Data_seq,'xy':xy}
-        pickle.dump(dtl,open('%s_data.pkl'%prefix,'wb'),protocol=2)
-        
-        return Data_seq
-    
-    def estimate_para(self,Data,t,mag_ref,prior=prior_generic(),opt=[]):
-        
-        param = MCMC_OU_GRDR(Data,t,mag_ref,1000,2,prior=prior,opt=opt)
-        #param['para_mcmc'] = param['para_mcmc'].iloc[::5]
-        #param['para_mcmc'].index = np.arange(1000)
-        pickle.dump(param,open('AAA_param.pkl','wb'),protocol=2)
-        
-        pp = PdfPages('AAA_param.pdf')
-        Graph_dr(Data,param,xlim=None,ylim=None,newfig=True)
-        pp.savefig()
-        Graph_param(param,newfig=True)
-        pp.savefig()
-        pp.close()
-        
-        self.predictive_dist(param,t,Data_test1=Data,prefix='AAA_check')
-        self.predictive_dist(param,{'st':t['en'],'en':2.0*t['en']},prefix='AAA')
-        
-        return param
-    
-    def predictive_dist(self,param,t_fore,para_ref=para_generic(),Data_test1=None,Data_test2=None,prefix='AAA'):
-        
-        para_mcmc = param['para_mcmc']; mag_ref = param['mag_ref'];
-        pred     = calc_CumPredDist(para_mcmc,mag_ref,t_fore)
-        pred_ref = calc_CumPredDist(para_ref ,mag_ref,t_fore)
-        mag = pred['mag']
-        pred['expected_num_generic'] = pred_ref['expected_num']
-        pred.t = t_fore
-                
-        if Data_test1 is not None:
-            [_,c_obs1] = Data_test1.mfd_cum(txm={'t':t_fore},mag=mag)
-            pred['c_obs1'] = c_obs1
-            
-        if Data_test2 is not None:
-            [_,c_obs2] = Data_test2.mfd_cum(txm={'t':t_fore},mag=mag)
-            pred['c_obs2'] = c_obs2
-
-        pickle.dump(pred,open('%s_pred.pkl'%prefix,'wb'),protocol=2)
-
-        Graph_pred(pred,param,t_fore,xlim=None,ylim=None,newfig=True,pdf='%s_pred.pdf'%prefix)
-        
-        return pred
-        
-        
-####################################
-##demo
-####################################
-def demo():
-    Data = load_Data('Hyogo.txt')
-    
-    t = {'st':0.0,'en':1.0}
+def Est(Data,t_learn,prior=None):
+    Data = load_dat(Data)
+    t = {'st':t_learn[0],'en':t_learn[1]}
     mag_ref = Data['Mag'][0]
-    
-    prior =[]
-    prior.append(['beta','n',0.85*np.log(10),0.15*np.log(10)])
-    prior.append(['p','n',1.12,0.11])
-    prior.append(['c','ln',-4.29,1.09])
-    prior.append(['sigma','ln',np.log(0.2),1.0])
-    
-    opt = []
-
-    param = Estimate_OU_GRDR(Data,t,mag_ref,prior=prior,opt=opt)
-    print(param['para'][['beta','mu1','sigma','k','p','c']])
-    print(param['L'])
-    print(param['ste'])
-    
-    """
-    mag_min = 1.45
-    T = Data[Data['Mag']>mag_min]['T'].values
-    plt.figure(110)
-    plt.clf()
-    plt.xscale('log')
-    plt.yscale('log')
-    plt.xlim(0.001,1000)
-    bin_edge = 2.0**np.arange(-10,10)
-    l_obs = np.histogram(T,bin_edge)[0]/(bin_edge[1:]-bin_edge[:-1])
-    plt.plot(np.sqrt(bin_edge[1:]*bin_edge[:-1]),l_obs,'ko')
-    t = 2.0**np.arange(-10,10,0.1)
-    l_ou = np.exp(para['beta']*(mag_ref-mag_min)) * para['k']*(t+para['c'])**(-para['p'])
-    plt.plot(t,l_ou,'r-')
-    """
-
-
-def demo_MCMC():
-    Data = load_Data('Hyogo.txt')
-    t = {'st':0.0,'en':1.0}
-    mag_ref = Data['Mag'][0]
-
-    prior =[]
-    prior.append(['beta','n',0.85*np.log(10),0.15*np.log(10)])
-    prior.append(['p','n',1.12,0.11])
-    prior.append(['c','ln',-4.29,1.09])
-    prior.append(['sigma','ln',np.log(0.2),1.0])
-    
-    opt = ['print']
-    
-    param = MCMC_OU_GRDR(Data,t,mag_ref,1000,2,prior,opt)
+    prior = prior_generic() if prior is None else prior
+    param = estimate_para(Data,t,mag_ref,prior=prior,opt=[])
     return param
 
-def demo_RT():
-    ######################################################################### Setting
-    ##main shock information
-    ms_s = '2016-04-16 01:25:05.47 130.763 32.7545 12.45 7.3'
-    alpha = 3.0
+def Fore(param,t_test,Data_test=None):
+    t = {'st':t_test[0],'en':t_test[1]}
+    pred_dist(param,t,Data_test=Data_test)
+
+#####################################################
+## RT Tool
+#####################################################
+def estimate_para(Data,t,mag_ref,prior=prior_generic(),opt=[]):
+        
+    print('Estimate()')
+        
+    param = MCMC_OU_GRDR(Data,t,mag_ref,25000,2,prior=prior,opt=opt)
+    param['para_mcmc'] = param['para_mcmc'].iloc[::5]
+    param['para_mcmc'].index = np.arange(1000)
+    pickle.dump(param,open('param.pkl','wb'),protocol=2)
+
+    mu = param['mu0'] + param['para']['mu1']; 
+    para_mcmc = param['para_mcmc']; para = param['para'];
     
-    #file information
-    f_catalog = 'kuma.jma'
+    pp = PdfPages('param.pdf')
+    Graph_dr(Data,mu,t,para,xlim=None,ylim=None,newfig=True)
+    pp.savefig()
+    Graph_param(para_mcmc,newfig=True)
+    pp.savefig()
+    pp.close()
     
-    #forecast information
-    t_h = 3 #hours
+    return param
     
-    ######################################################################### Forecast
-    RT = RT_Tool()
-    t1 = t_h/24.0
-    dir_output = '%dh' % t_h
-    ms = RT.parse_str(ms_s)
+def pred_dist(param,t_test,Data_test=None):
+
+    print('Forecast()')
     
-    print(ms)
-    print('\n')
+    para_mcmc = param['para_mcmc']; mag_ref = param['mag_ref'];
+    pred = calc_CumPredDist(para_mcmc,mag_ref,t_test)
+    mag = pred['mag']
     
-    ####data preparation
-    Data = RT.prepare_data(f_catalog,ms,alpha,None,t1*2.0,'AAA')
-    
-    ##estimate parameters
-    param = RT.estimate_para(Data,{'st':0.0,'en':t1},ms['Mag'])
-    
-    ####create a new directory and move files to the directory
-    subprocess.call('mkdir %s' % dir_output, shell=True)
-    subprocess.call('mv AAA* %s'  % dir_output, shell=True)
-    
-    
-    #predictive distribution - test
-    pred = RT.predictive_dist(param,{'st':t1,'en':t1*2.0},Data_test1=Data,prefix='BBB')
-    subprocess.call('mv BBB* %s'  % dir_output, shell=True)
-    
-    
+    if Data_test is not None:
+        Data_test = load_dat(Data_test)
+        [_,c_obs] = Data_test.mfd_cum(txm={'t':t_test},mag=mag)
+        pred['c_obs'] = c_obs
+
+    np.savetxt('fore.txt',np.hstack([mag.reshape(-1,1),pred[['expected_num','lower_bound','upper_bound']].values]),fmt='%.2f %15.3f %11d %11d',header='(M_t) (expected_number) (lower bound of 95% interval) (upper bound of 95% interval)')
+      
+    Graph_pred(pred,param,t_test,xlim=None,ylim=None,newfig=True,pdf='fore.pdf')
+        
 ####################################
 ##Test *never change the script
 ####################################
 def TEST():
-    Data = load_Data('Hyogo.txt')
+    Data = load_dat('./Kobe.txt')
     t = {'st':0.0,'en':1.0}
     mag_ref = Data['Mag'][0]
     
@@ -655,7 +555,7 @@ def TEST():
     
     opt = ['ste']
     
-    param = Estimate_OU_GRDR(Data,t,mag_ref,prior=prior,opt=opt)
+    param = Estimate_OU_GRDR(Data,t,mag_ref,prior,opt)
     print(param['para'][['beta','mu1','sigma','k','p','c']])
     print(param['L'])
     print(param['ste'])
@@ -677,8 +577,14 @@ def TEST():
     c        0.006400
     dtype: float64
     """
+
+def demo():
+    Data = './Kobe.txt'
+    t_learn = [0.0,1.0]
+    t_test = [1.0,2.0]
+    EstFore(Data,t_learn,t_test)
 ####################################
 ##Main
 ####################################
 if __name__ == '__main__':
-    pass
+    TEST()
