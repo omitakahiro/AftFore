@@ -345,8 +345,8 @@ def calc_95range(l):
 
     y = y/len(l)
     y_cdf = y.cumsum()
-    x1 = x[y_cdf>0.05][0]
-    x2 = x[y_cdf>0.95][0]
+    x1 = x[y_cdf>0.025][0]
+    x2 = x[y_cdf>0.975][0]
     
     if y.sum() < 0.999:
         sys.exit('range error in calc_95range')
