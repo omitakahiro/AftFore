@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import matplotlib as mpl
-mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
@@ -10,14 +9,9 @@ from scipy.stats import norm,poisson
 
 import sys,time,copy,pickle,datetime,subprocess
 
-try:
-    from .StatTool import Quasi_Newton,MCMC_prl
-    from .catalog import load_dat
-    from . import gr
-except:
-    from StatTool import Quasi_Newton,MCMC_prl
-    from catalog import load_dat
-    import gr
+from .StatTool import Quasi_Newton,MCMC_prl
+from .catalog import load_dat
+from . import gr
 
 """
 model description:
@@ -535,7 +529,7 @@ def pred_dist(param,t_test,Data_test=None):
         [_,c_obs] = Data_test.mfd_cum(txm={'t':t_test},mag=mag)
         pred['c_obs'] = c_obs
 
-    np.savetxt('fore.txt',np.hstack([mag.reshape(-1,1),pred[['expected_num','lower_bound','upper_bound']].values]),fmt='%.2f %15.3f %11d %11d',header='(M_t) (expected_number) (lower bound of 95% interval) (upper bound of 95% interval)')
+    np.savetxt('fore.txt',np.hstack([mag.values.reshape(-1,1),pred[['expected_num','lower_bound','upper_bound']].values]),fmt='%.2f %15.3f %11d %11d',header='(M_t) (expected_number) (lower bound of 95% interval) (upper bound of 95% interval)')
       
     Graph_pred(pred,param,t_test,xlim=None,ylim=None,newfig=True,pdf='fore.pdf')
         

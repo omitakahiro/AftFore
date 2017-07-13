@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import matplotlib as mpl
-mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 
@@ -9,10 +8,7 @@ from scipy.stats import norm
 from scipy import sparse
 import scipy.sparse.linalg as spla
 
-try:
-    from .StatTool import Quasi_Newton
-except:
-    from StatTool import Quasi_Newton
+from .StatTool import Quasi_Newton
 
 #####################################################
 ##GR and detection rate model with fixed parameters
