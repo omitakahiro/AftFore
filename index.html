@@ -5,8 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="google-site-verification" content="rM6POGIM5MD-3f5R939dLGOb3jgrOYWCrI7VvDD_fiM" />
-    <title>AftFore Documentation &mdash; AftFore 1.0 documentation</title>
+    
+    <title>AftFore Documentation &#8212; AftFore 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,14 +17,16 @@
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="AftFore 1.0 documentation" href="#" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="1. Overview" href="overview.html" /> 
   </head>
   <body role="document">
@@ -40,18 +42,29 @@
         <li class="right" >
           <a href="overview.html" title="1. Overview"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">AftFore 1.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">AftFore 1.0 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AftFore Documentation</a><ul>
+<li><a class="reference internal" href="#about-aftfore">About AftFore</a></li>
+<li><a class="reference internal" href="#acknowledgement">Acknowledgement</a></li>
+<li><a class="reference internal" href="#reference">Reference</a></li>
+<li><a class="reference internal" href="#contact">Contact</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Next topic</h4>
   <p class="topless"><a href="overview.html"
                         title="next chapter">1. Overview</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/index.txt"
+      <li><a href="_sources/index.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -75,7 +88,6 @@
             
   <div class="section" id="aftfore-documentation">
 <h1>AftFore Documentation<a class="headerlink" href="#aftfore-documentation" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference internal" href="userguide.html#module-AftFore" title="AftFore"><code class="xref py py-mod docutils literal"><span class="pre">AftFore</span></code></a> is a python module for generating aftershock forecasts based on the method proposed in <em>Omi et al.</em>, (2013). Especially <a class="reference internal" href="userguide.html#module-AftFore" title="AftFore"><code class="xref py py-mod docutils literal"><span class="pre">AftFore</span></code></a> aims to improve the forecasts at the early stage (e.g. from the first few hours to the few days after the main shock).</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">1. Overview</a></li>
@@ -90,19 +102,30 @@
 </li>
 </ul>
 </div>
-<br>
-This package contains a sample file of the 1995 Kobe aftershock sequence from the JMA unified catalog (<a href="http://www.data.jma.go.jp/svd/eqev/data/bulletin/hypo_e.html">http://www.data.jma.go.jp/svd/eqev/data/bulletin/hypo_e.html</a>). I appreciate JMA for providing the data.</p>
-<br>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">contact:</th><td class="field-body"><p class="first">Takahiro Omi (omi[at]sat.t.u-tokyo.ac.jp)</p>
-<p class="last"><a class="reference external" href="https://sites.google.com/site/omitakahiro/home-english">https://sites.google.com/site/omitakahiro/home-english</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+<div class="section" id="about-aftfore">
+<h2>About AftFore<a class="headerlink" href="#about-aftfore" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="userguide.html#module-AftFore" title="AftFore"><code class="xref py py-mod docutils literal"><span class="pre">AftFore</span></code></a> is a python module for generating aftershock forecasts based on the method proposed in <em>Omi et al.</em>, (2013). Especially <a class="reference internal" href="userguide.html#module-AftFore" title="AftFore"><code class="xref py py-mod docutils literal"><span class="pre">AftFore</span></code></a> aims to improve the forecasts at the early stage (e.g. from the first few hours to the few days after the main shock).</p>
+<p>Anyone can freely use this code without permission for non-commercial purposes, and any feedback is welcome. If you present results obtaind by using <a class="reference internal" href="userguide.html#module-AftFore" title="AftFore"><code class="xref py py-mod docutils literal"><span class="pre">AftFore</span></code></a>, please appropriately cite <em>Omi et al.</em>, (2013).</p>
+</div>
+<div class="section" id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h2>
+<p>This package contains a sample file of the 1995 Kobe aftershock sequence from the JMA unified catalog (<a class="reference external" href="http://www.data.jma.go.jp/svd/eqev/data/bulletin/hypo_e.html">http://www.data.jma.go.jp/svd/eqev/data/bulletin/hypo_e.html</a>). I appreciate JMA for providing the data.</p>
+</div>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">T. Omi, Y. Ogata, Y. Hirata, and K. Aihara, &#8220;Forecasting large aftershocks within one day after the main shock&#8221;, Scientific Reports 3, 2218 (2013).</div>
+<div class="line"><a class="reference external" href="http://dx.doi.org/10.1038/srep02218">http://dx.doi.org/10.1038/srep02218</a></div>
+</div>
+</div>
+<div class="section" id="contact">
+<h2>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Takahiro Omi</div>
+<div class="line">omi[at]sat.t.u-tokyo.ac.jp</div>
+<div class="line"><a class="reference external" href="https://sites.google.com/site/omitakahiro/home-english">https://sites.google.com/site/omitakahiro/home-english</a></div>
+</div>
+</div>
 </div>
 
 
@@ -123,12 +146,12 @@ This package contains a sample file of the 1995 Kobe aftershock sequence from th
         <li class="right" >
           <a href="overview.html" title="1. Overview"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">AftFore 1.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">AftFore 1.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2016, Takahiro Omi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.3.
+        &#169; Copyright 2016, Takahiro Omi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
     </div>
   </body>
 </html>
