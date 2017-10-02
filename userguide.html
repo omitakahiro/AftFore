@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="1. Overview" href="overview.html" /> 
@@ -63,10 +63,16 @@
 <li><a class="reference internal" href="#forecast-generation">2.5.2. Forecast Generation</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#aftfore-reference">2.6. AftFore Reference</a><ul>
-<li><a class="reference internal" href="#function">2.6.1. Function</a></li>
-<li><a class="reference internal" href="#object">2.6.2. Object</a></li>
-<li><a class="reference internal" href="#generated-files">2.6.3. Generated Files</a></li>
+<li><a class="reference internal" href="#tips">2.6. Tips</a><ul>
+<li><a class="reference internal" href="#how-to-extract-the-estimated-parameter-values">2.6.1. How to extract the estimated parameter values</a></li>
+<li><a class="reference internal" href="#how-the-parameter-values-are-related-to-the-earthquake-occurrence-rate-or-earthquake-number">2.6.2. How the parameter values are related to the earthquake occurrence rate or earthquake number</a></li>
+<li><a class="reference internal" href="#how-to-show-the-n-t-plot-the-cumulative-number-of-aftershocks-versus-time-compared-with-the-forecast-experimental">2.6.3. How to show the N-T plot (the cumulative number of aftershocks versus time), compared with the forecast (Experimental)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aftfore-reference">2.7. AftFore Reference</a><ul>
+<li><a class="reference internal" href="#function">2.7.1. Function</a></li>
+<li><a class="reference internal" href="#object">2.7.2. Object</a></li>
+<li><a class="reference internal" href="#generated-files">2.7.3. Generated Files</a></li>
 </ul>
 </li>
 </ul>
@@ -110,7 +116,7 @@
 <blockquote>
 <div><p><a class="reference internal" href="#module-AftFore" title="AftFore"><code class="xref py py-mod docutils literal"><span class="pre">AftFore</span></code></a> depends on the following external packages:</p>
 <ul class="simple">
-<li>Python 2.7 or 3.4</li>
+<li>Python 2.7</li>
 <li>Numpy</li>
 <li>Scipy</li>
 <li>Matplotlib</li>
@@ -189,7 +195,7 @@
 <span class="n">t_test</span>  <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>            <span class="c1"># The range of the testing period [day].</span>
 <span class="n">Data</span>    <span class="o">=</span> <span class="s1">&#39;./AftFore/Kobe.txt&#39;</span>  <span class="c1"># The path of the date file</span>
 
-<span class="n">aft</span><span class="o">.</span><span class="n">EstFore</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span><span class="n">t_learn</span><span class="p">,</span><span class="n">t_test</span><span class="p">)</span>
+<span class="n">aft</span><span class="o">.</span><span class="n">EstFore</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span> <span class="n">t_learn</span><span class="p">,</span> <span class="n">t_test</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This process takes about a few minutes. The forecast result (the number of earthquakes with <span class="math">\(M&gt;M_t\)</span> in the testing period) is saved in <a class="reference internal" href="#var-fore.txt"><code class="xref std std-var docutils literal"><span class="pre">fore.txt</span></code></a>.</p>
@@ -230,7 +236,7 @@
 <div class="highlight-Python"><div class="highlight"><pre><span></span><span class="n">t_learn</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>            <span class="c1"># The range of the learning period [day].</span>
 <span class="n">Data</span>    <span class="o">=</span> <span class="s1">&#39;./AftFore/Kobe.txt&#39;</span>  <span class="c1"># The path of the date file</span>
 
-<span class="n">param</span> <span class="o">=</span> <span class="n">aft</span><span class="o">.</span><span class="n">Est</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span><span class="n">t_learn</span><span class="p">)</span>
+<span class="n">param</span> <span class="o">=</span> <span class="n">aft</span><span class="o">.</span><span class="n">Est</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span> <span class="n">t_learn</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><a class="reference internal" href="#AftFore.Est" title="AftFore.Est"><code class="xref py py-func docutils literal"><span class="pre">Est()</span></code></a> returns a parameter object <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> that contains the estimated parameter values and other information, which will be used for producing forecasts. <a class="reference internal" href="#AftFore.Est" title="AftFore.Est"><code class="xref py py-func docutils literal"><span class="pre">Est()</span></code></a> also generates: <a class="reference internal" href="#var-param.pkl"><code class="xref std std-var docutils literal"><span class="pre">param.pkl</span></code></a> (a pickle file that saves <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a>) and <a class="reference internal" href="#var-param.pdf"><code class="xref std std-var docutils literal"><span class="pre">param.pdf</span></code></a> (a figure summarizing the estimated parameters).</p>
@@ -248,7 +254,7 @@
 <div><p>The forecast is produced using the estimated parameter sets <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> by <a class="reference internal" href="#AftFore.Fore" title="AftFore.Fore"><code class="xref py py-func docutils literal"><span class="pre">Fore()</span></code></a>.</p>
 <div class="highlight-Python"><div class="highlight"><pre><span></span><span class="n">t_test</span>  <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>            <span class="c1"># The range of the testing period [day].</span>
 
-<span class="n">aft</span><span class="o">.</span><span class="n">Fore</span><span class="p">(</span><span class="n">param</span><span class="p">,</span><span class="n">t_test</span><span class="p">)</span>
+<span class="n">aft</span><span class="o">.</span><span class="n">Fore</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">t_test</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><a class="reference internal" href="#AftFore.Fore" title="AftFore.Fore"><code class="xref py py-func docutils literal"><span class="pre">Fore()</span></code></a> generates <a class="reference internal" href="#var-fore.txt"><code class="xref std std-var docutils literal"><span class="pre">fore.txt</span></code></a> and <a class="reference internal" href="#var-fore.pdf"><code class="xref std std-var docutils literal"><span class="pre">fore.pdf</span></code></a> that summarize the forecast result.</p>
@@ -256,16 +262,77 @@
 <div class="highlight-Python"><div class="highlight"><pre><span></span><span class="n">t_test</span>  <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>             <span class="c1"># The range of the testing period [day].</span>
 <span class="n">Data_test</span> <span class="o">=</span> <span class="s1">&#39;./AftFore/Kobe.txt&#39;</span> <span class="c1"># The path of the data file including the data in the testing period</span>
 
-<span class="n">aft</span><span class="o">.</span><span class="n">Fore</span><span class="p">(</span><span class="n">param</span><span class="p">,</span><span class="n">t_test</span><span class="p">,</span><span class="n">Data_test</span><span class="o">=</span><span class="n">Data_test</span><span class="p">)</span>
+<span class="n">aft</span><span class="o">.</span><span class="n">Fore</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">t_test</span><span class="p">,</span> <span class="n">Data_test</span><span class="o">=</span><span class="n">Data_test</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
 </div>
 </div>
+<div class="section" id="tips">
+<h2>2.6. Tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-extract-the-estimated-parameter-values">
+<span id="tips-param"></span><h3>2.6.1. How to extract the estimated parameter values<a class="headerlink" href="#how-to-extract-the-estimated-parameter-values" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The estimated parameter values are stored in the object <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> (please see <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> for the detail).</p>
+<p>The MAP parameters:</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">beta</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;para&quot;</span><span class="p">][[</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;beta&quot;</span><span class="p">]]</span>
+<span class="k">print</span> <span class="s2">&quot;k: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">k</span>
+<span class="k">print</span> <span class="s2">&quot;p: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">p</span>
+<span class="k">print</span> <span class="s2">&quot;c: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">c</span>
+<span class="k">print</span> <span class="s2">&quot;beta: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">beta</span>
+
+<span class="sd">&quot;&quot;&quot; OUTPUT</span>
+<span class="sd">k: 0.021769</span>
+<span class="sd">p: 1.037202</span>
+<span class="sd">c: 0.015635</span>
+<span class="sd">beta: 1.691913</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Please also see the next tips for forecasting the aftershock activity from these parameters.</p>
+</div></blockquote>
+</div>
+<div class="section" id="how-the-parameter-values-are-related-to-the-earthquake-occurrence-rate-or-earthquake-number">
+<h3>2.6.2. How the parameter values are related to the earthquake occurrence rate or earthquake number<a class="headerlink" href="#how-the-parameter-values-are-related-to-the-earthquake-occurrence-rate-or-earthquake-number" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>In our model, the occurrence rate of an aftershock of magnithde <span class="math">\(M\)</span> at time <span class="math">\(t\)</span> is given by</p>
+<div class="math">
+\[\lambda(t,M) = \frac{k}{(t+c)^p}\beta e^{-\beta(M-M_0)},\]</div>
+<p>where <span class="math">\(M_0\)</span> represents the mainshock magnitude.</p>
+<p>For a given threshold magnitude <span class="math">\(M_{th}\)</span>, the occurrence rate of an aftershock of <span class="math">\(M&gt;M_{th}\)</span> at time <span class="math">\(t\)</span> is obtained by</p>
+<div class="math">
+\[\lambda(t) = \frac{k}{(t+c)^p} e^{\beta(M_0-M_{th})}.\]</div>
+<p>The expected number of aftershocks of <span class="math">\(M&gt;M_{th}\)</span> in the time interval <span class="math">\([t_1,t_2]\)</span> is also obtained by</p>
+<div class="math">
+\[n = \int_{t_1}^{t_2}dt \lambda(t) = \frac{k}{-p+1} [(t_2+c)^{-p+1}-(t_1+c)^{-p+1}] e^{\beta(M_0-M_{th})}.\]</div>
+</div></blockquote>
+</div>
+<div class="section" id="how-to-show-the-n-t-plot-the-cumulative-number-of-aftershocks-versus-time-compared-with-the-forecast-experimental">
+<h3>2.6.3. How to show the N-T plot (the cumulative number of aftershocks versus time), compared with the forecast (Experimental)<a class="headerlink" href="#how-to-show-the-n-t-plot-the-cumulative-number-of-aftershocks-versus-time-compared-with-the-forecast-experimental" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>A function <code class="xref py py-func docutils literal"><span class="pre">NT_plot()</span></code> shows the time evolution of the cumulative number of aftershocks of <em>M &gt; mag_th</em> in the time interval [0, <em>t_test_end</em>], compared with the forecast. The confidence interval is evaluated in a Bayesian way, using the parameter sets sampled from the posterior distribution (para_mcmc in param).</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="c1"># parameter estimation</span>
+<span class="n">t_learn</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>            <span class="c1"># The range of the learning period [day].</span>
+<span class="n">Data</span>    <span class="o">=</span> <span class="s1">&#39;./AftFore/Kobe.txt&#39;</span>  <span class="c1"># The path of the date file</span>
+
+<span class="n">param</span> <span class="o">=</span> <span class="n">aft</span><span class="o">.</span><span class="n">Est</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span> <span class="n">t_learn</span><span class="p">)</span>
+
+<span class="c1"># showing the NT plot with the forecast</span>
+<span class="n">mag_th</span>   <span class="o">=</span> <span class="mf">1.95</span>               <span class="c1"># The magnitude threshold M_th fore forecasting</span>
+<span class="n">t_test_end</span>  <span class="o">=</span> <span class="mf">5.0</span>             <span class="c1"># The end of the forecasting period [day]. The time interval [0, t_test_end]</span>
+
+<span class="n">aft</span><span class="o">.</span><span class="n">NT_plot</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span> <span class="n">t_test_end</span><span class="p">,</span> <span class="n">mag_th</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The output figure is saved as &#8220;NT.pdf&#8221;.</p>
+<a class="reference internal image-reference" href="_images/NT.png"><img alt="_images/NT.png" src="_images/NT.png" style="width: 300px;" /></a>
+</div></blockquote>
+</div>
+</div>
 <div class="section" id="aftfore-reference">
-<h2>2.6. AftFore Reference<a class="headerlink" href="#aftfore-reference" title="Permalink to this headline">¶</a></h2>
+<h2>2.7. AftFore Reference<a class="headerlink" href="#aftfore-reference" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="function">
-<h3>2.6.1. Function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h3>
+<h3>2.7.1. Function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><dl class="function">
 <dt id="AftFore.Est">
@@ -317,7 +384,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="object">
-<h3>2.6.2. Object<a class="headerlink" href="#object" title="Permalink to this headline">¶</a></h3>
+<h3>2.7.2. Object<a class="headerlink" href="#object" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><dl class="var">
 <dt id="var-t_learn">
@@ -343,7 +410,13 @@
 <dl class="var">
 <dt id="var-param">
 <code class="descname">param</code><a class="headerlink" href="#var-param" title="Permalink to this definition">¶</a></dt>
-<dd><p>A parameter object</p>
+<dd><p>A parameter object. Also see <a class="reference internal" href="#tips-param"><span class="std std-ref">How to extract the estimated parameter values</span></a>.</p>
+<blockquote>
+<div><p>param[&#8220;para&#8221;]: the MAP estimated parameters (pandas.Series)</p>
+<p>param[&#8220;para_mcmc&#8221;]: the parameter set sampled from the posterior distribution (pandas.DataFrame)</p>
+<p>param[&#8220;mag_ref&#8221;]: the main shock magnitude</p>
+<p>param[&#8220;t&#8221;]: the estimation period</p>
+</div></blockquote>
 </dd></dl>
 
 <dl class="var">
@@ -395,7 +468,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="generated-files">
-<span id="genfiles"></span><h3>2.6.3. Generated Files<a class="headerlink" href="#generated-files" title="Permalink to this headline">¶</a></h3>
+<span id="genfiles"></span><h3>2.7.3. Generated Files<a class="headerlink" href="#generated-files" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><dl class="var">
 <dt id="var-param.pkl">
@@ -469,7 +542,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, Takahiro Omi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
     </div>
   </body>
 </html>
