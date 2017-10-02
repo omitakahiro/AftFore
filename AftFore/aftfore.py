@@ -473,6 +473,79 @@ def Graph_pred(pred,param,t_test,xlim=None,ylim=None,newfig=True,pdf=False):
         else:
             plt.savefig(pdf)
 
+def Graph_NT_plot(Data,t_end,mag_min,param):
+    
+    para_mcmc = param["para_mcmc"].copy()
+    mag_ref = param["mag_ref"]
+    t_est = param["t"]
+    t_fore = {"st":t_est["en"], "en":t_end}
+    
+    para_mcmc["k"] = para_mcmc["k"]*np.exp(para_mcmc["beta"]*(mag_ref-mag_min))
+    para = para_mcmc.iloc[0].copy()
+    
+    ##Observed data
+    T_est  = Data.search({"t":t_est,  "mag_min":mag_min}).copy()["T"]
+    T_fore = Data.search({"t":t_fore, "mag_min":mag_min}).copy()["T"]
+    n_est  = len(T_est)
+    n_fore = len(T_fore)
+    
+    x_est = np.hstack([0.0,np.repeat(T_est,2),t_est["en"]])
+    y_est  = np.repeat(np.arange(n_est+1),2)
+
+    x_fore = np.hstack([t_fore["st"],np.repeat(T_fore,2),t_fore["en"]])
+    y_fore  = n_est + np.repeat(np.arange(n_fore+1),2)
+    
+    ##Expected
+    itv = {"st":np.hstack([t_fore["st"],T_fore]) ,"en":np.hstack([T_fore,t_fore["en"]]) }
+    x_exp = np.hstack([t_fore["st"],T_fore,t_fore["en"]])
+    
+    n_mcmc_list = []
+    for i in range(para_mcmc.shape[0]):
+        int_mcmc_i = Int_OU(para_mcmc.iloc[i],itv,only_L=True)[0]
+        n_mcmc_i = np.hstack([0,np.cumsum(int_mcmc_i)])
+        n_mcmc_list.append(n_mcmc_i)
+    
+    n_mcmc_list = np.array(n_mcmc_list)
+    
+    y_exp = n_est + n_mcmc_list[0]
+    
+    n_mcmc_mean = n_mcmc_list.mean(axis=0)
+    n_mcmc_var = n_mcmc_list.var(axis=0)
+    y_exp_std = np.sqrt( n_mcmc_mean + n_mcmc_var )
+    y_exp_std_map = np.sqrt(n_mcmc_list[0])
+    
+    ##Plotting
+    plt.figure(figsize=(8.27,11.69))
+    mpl.rc('font', size=12, family='Arial')
+    mpl.rc('axes',linewidth=1,titlesize=12)
+    mpl.rc('pdf',fonttype=42)
+    mpl.rc('xtick.major',width=1)
+    mpl.rc('xtick.minor',width=1)
+    mpl.rc('ytick.major',width=1)
+    mpl.rc('ytick.minor',width=1)
+    
+    y_max = np.max([(n_est+n_fore)*1.1,y_exp[-1]+y_exp_std[-1]*2*1.1])
+    
+    plt.plot(x_est,y_est,"k-",label="observed")
+    plt.plot(x_fore,y_fore,"k-")
+    plt.plot(x_exp,y_exp,"r-",label="expected")
+    plt.plot(x_exp,y_exp - y_exp_std*2,"r--",label="95% confidence interval")
+    plt.plot(x_exp,y_exp + y_exp_std*2,"r--")
+    #plt.plot(x_exp,y_exp - y_exp_std_map*2,"b-")
+    #plt.plot(x_exp,y_exp + y_exp_std_map*2,"b-")
+    plt.plot([t_est["en"],t_est["en"]],[0,y_max],"k:")
+    plt.plot([0,t_fore["en"]],[n_est,n_est],"k:")
+    
+    plt.xlim([0,t_fore["en"]])
+    plt.ylim([0,y_max])
+    plt.xlabel("time")
+    plt.ylabel("cumulative number of aftershocks")
+    plt.title("M > %.2f"%mag_min)
+    plt.legend(loc="lower right",numpoints=1)
+    
+    plt.tight_layout(rect=[0.25,0.3,0.75,0.7])
+    plt.savefig("NT.pdf")
+    
 #####################################################
 ## Wrapper
 #####################################################
@@ -492,6 +565,10 @@ def Fore(param,t_test,Data_test=None):
     t = {'st':t_test[0],'en':t_test[1]}
     pred_dist(param,t,Data_test=Data_test)
 
+def NT_plot(Data,t_end,mag_min,param):
+    Data = load_dat(Data)
+    Graph_NT_plot(Data,t_end,mag_min,param)
+    
 #####################################################
 ## RT Tool
 #####################################################

@@ -11,7 +11,7 @@ Requirements
 
     :mod:`AftFore` depends on the following external packages:
     
-    - Python 2.7 or 3.4
+    - Python 2.7
     - Numpy
     - Scipy
     - Matplotlib
@@ -92,7 +92,7 @@ _____________________
         t_test  = [1.0, 2.0]            # The range of the testing period [day].
         Data    = './AftFore/Kobe.txt'  # The path of the date file
         
-        aft.EstFore(Data,t_learn,t_test)
+        aft.EstFore(Data, t_learn, t_test)
     
     This process takes about a few minutes. The forecast result (the number of earthquakes with :math:`M>M_t` in the testing period) is saved in :var:`fore.txt`.
     
@@ -139,7 +139,7 @@ Parameter Estimation
         t_learn = [0.0, 1.0]            # The range of the learning period [day].
         Data    = './AftFore/Kobe.txt'  # The path of the date file
         
-        param = aft.Est(Data,t_learn)
+        param = aft.Est(Data, t_learn)
     
     :py:func:`Est` returns a parameter object :var:`param` that contains the estimated parameter values and other information, which will be used for producing forecasts. :py:func:`Est` also generates: :var:`param.pkl` (a pickle file that saves :var:`param`) and :var:`param.pdf` (a figure summarizing the estimated parameters).
         
@@ -163,7 +163,7 @@ Forecast Generation
         
         t_test  = [1.0, 2.0]            # The range of the testing period [day].
         
-        aft.Fore(param,t_test)
+        aft.Fore(param, t_test)
     
     :py:func:`Fore` generates :var:`fore.txt` and :var:`fore.pdf` that summarize the forecast result.
     
@@ -174,8 +174,76 @@ Forecast Generation
         t_test  = [1.0, 2.0]             # The range of the testing period [day].
         Data_test = './AftFore/Kobe.txt' # The path of the data file including the data in the testing period
         
-        aft.Fore(param,t_test,Data_test=Data_test)
+        aft.Fore(param, t_test, Data_test=Data_test)
 
+Tips
+_____________________
+
+.. _tips-param:
+
+How to extract the estimated parameter values
+================================================
+	The estimated parameter values are stored in the object :var:`param` (please see :var:`param` for the detail).
+	
+	The MAP parameters:
+	
+	.. code-block:: Python
+	
+		[k,p,c,beta] = param["para"][["k", "p", "c", "beta"]]
+		print "k: %f" % k
+		print "p: %f" % p
+		print "c: %f" % c
+		print "beta: %f" % beta
+		
+		""" OUTPUT
+		k: 0.021769
+		p: 1.037202
+		c: 0.015635
+		beta: 1.691913
+		"""
+	
+	Please also see the next tips for forecasting the aftershock activity from these parameters.
+	
+How the parameter values are related to the earthquake occurrence rate or earthquake number
+================================================================================================
+    
+    In our model, the occurrence rate of an aftershock of magnithde :math:`M` at time :math:`t` is given by
+    
+    .. math:: \lambda(t,M) = \frac{k}{(t+c)^p}\beta e^{-\beta(M-M_0)},
+    
+    where :math:`M_0` represents the mainshock magnitude.
+    
+    For a given threshold magnitude :math:`M_{th}`, the occurrence rate of an aftershock of :math:`M>M_{th}` at time :math:`t` is obtained by
+    
+    .. math:: \lambda(t) = \frac{k}{(t+c)^p} e^{\beta(M_0-M_{th})}.
+    
+    The expected number of aftershocks of :math:`M>M_{th}` in the time interval :math:`[t_1,t_2]` is also obtained by
+    
+    .. math:: n = \int_{t_1}^{t_2}dt \lambda(t) = \frac{k}{-p+1} [(t_2+c)^{-p+1}-(t_1+c)^{-p+1}] e^{\beta(M_0-M_{th})}.
+
+How to show the N-T plot (the cumulative number of aftershocks versus time), compared with the forecast (Experimental)
+=========================================================================================================================
+
+    A function :py:func:`NT_plot` shows the time evolution of the cumulative number of aftershocks of *M > mag_th* in the time interval [0, *t_test_end*], compared with the forecast. The confidence interval is evaluated in a Bayesian way, using the parameter sets sampled from the posterior distribution (para_mcmc in param).
+
+    .. code-block:: Python
+    
+        # parameter estimation
+        t_learn = [0.0, 1.0]            # The range of the learning period [day].
+        Data    = './AftFore/Kobe.txt'  # The path of the date file
+        
+        param = aft.Est(Data, t_learn)
+        
+        # showing the NT plot with the forecast
+        mag_th   = 1.95               # The magnitude threshold M_th fore forecasting
+        t_test_end  = 5.0             # The end of the forecasting period [day]. The time interval [0, t_test_end]
+        
+        aft.NT_plot(Data, t_test_end, mag_th, param)
+    
+    The output figure is saved as "NT.pdf".
+    
+    .. image:: NT.png
+        :width: 300px
 
 AftFore Reference
 _____________________
@@ -220,10 +288,17 @@ Object
         The path of the data file
     
     .. var:: param
+	
+        A parameter object. Also see :ref:`tips-param`.
         
-        A parameter object
-        
-    
+			param["para"]: the MAP estimated parameters (pandas.Series)
+		
+			param["para_mcmc"]: the parameter set sampled from the posterior distribution (pandas.DataFrame)
+		
+			param["mag_ref"]: the main shock magnitude
+		
+			param["t"]: the estimation period
+		
     .. var:: prior
     
         A prior object (optional: the default prior is used unless otherwise set)
