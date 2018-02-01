@@ -1,16 +1,13 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>2. User Guide &#8212; AftFore 1.0 documentation</title>
-    
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
@@ -24,12 +21,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="1. Overview" href="overview.html" /> 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -137,10 +134,10 @@
 <div class="section" id="data-preparation">
 <h2>2.2. Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><p>A data file is an ascii file that contains the list of the relative time after the main shock [day] (the first column) and magnitude (the second column) of the main shock and its aftershocks. A sample aftershock data of the 1995 Kobe earthquake of M7.3 is included in the source file (./AftFore/Kobe.txt).</p>
+<div><p>A data file is an ascii file that contains the list of the relative time after the main shock [day] (the first column) and magnitude (the second column) of the main shock and its aftershocks. The first event is identified as the main shock, and the time of the main shock must be set to 0. A sample aftershock data of the 1995 Kobe earthquake of M7.3 is included in the source file (./AftFore/Kobe.txt).</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The first event is identified as the main shock, and the time of the main shock must be set to 0.</p>
+<p class="last">AftFore uses all the aftershock data including earthquake with magnitude smaller than the completeness magnitude for the estimation, so please inclue all the available data in your data file.</p>
 </div>
 <p>A data file is like:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>0.000000 7.3
@@ -188,7 +185,7 @@
 <p class="first admonition-title">Note</p>
 <p class="last">Before running the code, the user needs to (1) put the downloaded AftFore folder in your working directory and (2) prepare the data file.</p>
 </div>
-<p>The below code shows the simplest way to generate a forecast by using <a class="reference internal" href="#AftFore.EstFore" title="AftFore.EstFore"><code class="xref py py-func docutils literal"><span class="pre">EstFore()</span></code></a>. The parameters that the user has to set are <a class="reference internal" href="#var-t_learn"><code class="xref std std-var docutils literal"><span class="pre">t_learn</span></code></a> (the range of the learning period), <a class="reference internal" href="#var-t_test"><code class="xref std std-var docutils literal"><span class="pre">t_test</span></code></a> (the range of the testing period), and <a class="reference internal" href="#var-Data"><code class="xref std std-var docutils literal"><span class="pre">Data</span></code></a> (the path of the data file). For example, this code uses the data file &#8216;./AftFore/Kobe.txt&#8217; and  generates a forecast for the testing period [1.0, 2.0] (day) based on the data in the learning period [0.0, 1.0] (day). The estimation is carried out with the default prior probability distribution. See <a class="reference internal" href="#var-prior"><code class="xref std std-var docutils literal"><span class="pre">prior</span></code></a> for a method to customize the prior.</p>
+<p>The below code shows the simplest way to generate a forecast by using <a class="reference internal" href="#AftFore.EstFore" title="AftFore.EstFore"><code class="xref py py-func docutils literal"><span class="pre">EstFore()</span></code></a>. The parameters that the user has to set are <a class="reference internal" href="#var-t_learn"><code class="xref std std-var docutils literal"><span class="pre">t_learn</span></code></a> (the range of the learning period), <a class="reference internal" href="#var-t_test"><code class="xref std std-var docutils literal"><span class="pre">t_test</span></code></a> (the range of the testing period), and <a class="reference internal" href="#var-Data"><code class="xref std std-var docutils literal"><span class="pre">Data</span></code></a> (the path of the data file). For example, this code uses the data file ‘./AftFore/Kobe.txt’ and  generates a forecast for the testing period [1.0, 2.0] (day) based on the data in the learning period [0.0, 1.0] (day). The estimation is carried out with the default prior probability distribution. See <a class="reference internal" href="#var-prior"><code class="xref std std-var docutils literal"><span class="pre">prior</span></code></a> for a method to customize the prior.</p>
 <div class="highlight-Python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">AftFore</span> <span class="kn">as</span> <span class="nn">aft</span>
 
 <span class="n">t_learn</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>            <span class="c1"># The range of the learning period [day].</span>
@@ -324,7 +321,7 @@
 <span class="n">aft</span><span class="o">.</span><span class="n">NT_plot</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span> <span class="n">t_test_end</span><span class="p">,</span> <span class="n">mag_th</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The output figure is saved as &#8220;NT.pdf&#8221;.</p>
+<p>The output figure is saved as “NT.pdf”.</p>
 <a class="reference internal image-reference" href="_images/NT.png"><img alt="_images/NT.png" src="_images/NT.png" style="width: 300px;" /></a>
 </div></blockquote>
 </div>
@@ -390,14 +387,14 @@
 <dt id="var-t_learn">
 <code class="descname">t_learn</code><a class="headerlink" href="#var-t_learn" title="Permalink to this definition">¶</a></dt>
 <dd><p>[float, float]</p>
-<p>The lower and upper range of the leraning period. The unit is &#8216;day&#8217;.</p>
+<p>The lower and upper range of the leraning period. The unit is ‘day’.</p>
 </dd></dl>
 
 <dl class="var">
 <dt id="var-t_test">
 <code class="descname">t_test</code><a class="headerlink" href="#var-t_test" title="Permalink to this definition">¶</a></dt>
 <dd><p>[float, float]</p>
-<p>The lower and upper range of the testing period. The unit is &#8216;day&#8217;.</p>
+<p>The lower and upper range of the testing period. The unit is ‘day’.</p>
 </dd></dl>
 
 <dl class="var">
@@ -412,10 +409,10 @@
 <code class="descname">param</code><a class="headerlink" href="#var-param" title="Permalink to this definition">¶</a></dt>
 <dd><p>A parameter object. Also see <a class="reference internal" href="#tips-param"><span class="std std-ref">How to extract the estimated parameter values</span></a>.</p>
 <blockquote>
-<div><p>param[&#8220;para&#8221;]: the MAP estimated parameters (pandas.Series)</p>
-<p>param[&#8220;para_mcmc&#8221;]: the parameter set sampled from the posterior distribution (pandas.DataFrame)</p>
-<p>param[&#8220;mag_ref&#8221;]: the main shock magnitude</p>
-<p>param[&#8220;t&#8221;]: the estimation period</p>
+<div><p>param[“para”]: the MAP estimated parameters (pandas.Series)</p>
+<p>param[“para_mcmc”]: the parameter set sampled from the posterior distribution (pandas.DataFrame)</p>
+<p>param[“mag_ref”]: the main shock magnitude</p>
+<p>param[“t”]: the estimation period</p>
 </div></blockquote>
 </dd></dl>
 
@@ -427,19 +424,19 @@
 <blockquote>
 <div><p><strong>para_name</strong>: string</p>
 <blockquote>
-<div>A name of the parameter (string) from {&#8216;k&#8217;,&#8217;p&#8217;,&#8217;c&#8217;,&#8217;beta&#8217;,&#8217;sigma&#8217;,&#8217;mu1&#8217;}</div></blockquote>
+<div>A name of the parameter (string) from {‘k’,’p’,’c’,’beta’,’sigma’,’mu1’}</div></blockquote>
 <p><strong>para_type</strong>: string</p>
 <blockquote>
 <div><p>A probability distribution function from the below list</p>
-<p>&#8216;n&#8217;: the normal distribution <span class="math">\(p(x)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp[-\frac{(x-\mu)^2}{2\sigma^2}]\)</span></p>
-<p>&#8216;ln&#8217;: the log-normal distribution <span class="math">\(p(x)=\frac{1}{x\sqrt{2\pi\sigma^2}}\exp[-\frac{(\ln(x)-\mu)^2}{2\sigma^2}]\)</span></p>
-<p>&#8216;f&#8217;: the Dirac&#8217;s delta <span class="math">\(p(x)=\delta(x-\mu)\)</span>  (This prior fixes a given parameter to be <span class="math">\(\mu\)</span>)</p>
+<p>‘n’: the normal distribution <span class="math">\(p(x)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp[-\frac{(x-\mu)^2}{2\sigma^2}]\)</span></p>
+<p>‘ln’: the log-normal distribution <span class="math">\(p(x)=\frac{1}{x\sqrt{2\pi\sigma^2}}\exp[-\frac{(\ln(x)-\mu)^2}{2\sigma^2}]\)</span></p>
+<p>‘f’: the Dirac’s delta <span class="math">\(p(x)=\delta(x-\mu)\)</span>  (This prior fixes a given parameter to be <span class="math">\(\mu\)</span>)</p>
 </div></blockquote>
 <dl class="docutils">
 <dt><strong>mu</strong>: float</dt>
 <dd>the <span class="math">\(\mu\)</span>-value of the prior probability distribution function</dd>
 <dt><strong>sigma</strong>: float</dt>
-<dd>the <span class="math">\(\sigma\)</span>-value of the prior probability distribution function. Set <em>sigma</em> to 0, if <em>&#8216;f&#8217;</em> is chosen for <em>para_type</em>.</dd>
+<dd>the <span class="math">\(\sigma\)</span>-value of the prior probability distribution function. Set <em>sigma</em> to 0, if <em>‘f’</em> is chosen for <em>para_type</em>.</dd>
 </dl>
 </div></blockquote>
 <p>For example, if the user want to use the normal distribution with <span class="math">\(\mu=2.0\)</span> and <span class="math">\(\sigma=0.5\)</span> as the prior of the parameter <span class="math">\(\beta\)</span>, the prior object is given as:</p>
@@ -461,7 +458,7 @@
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">When the user uses the customized prior, it is strongly recommended to introduce a prior for the <span class="math">\(\sigma\)</span>-parameter for the computational stability. For example, the prior [&#8216;sigma&#8217;,&#8217;ln&#8217;,np.log(0.2),1.0] is used for the <span class="math">\(\sigma\)</span>-parameter in the default prior.</p>
+<p class="last">When the user uses the customized prior, it is strongly recommended to introduce a prior for the <span class="math">\(\sigma\)</span>-parameter for the computational stability. For example, the prior [‘sigma’,’ln’,np.log(0.2),1.0] is used for the <span class="math">\(\sigma\)</span>-parameter in the default prior.</p>
 </div>
 </dd></dl>
 
@@ -542,7 +539,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, Takahiro Omi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>
 </html>
