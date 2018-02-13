@@ -62,8 +62,9 @@
 </li>
 <li><a class="reference internal" href="#tips">2.6. Tips</a><ul>
 <li><a class="reference internal" href="#how-to-extract-the-estimated-parameter-values">2.6.1. How to extract the estimated parameter values</a></li>
-<li><a class="reference internal" href="#how-the-parameter-values-are-related-to-the-earthquake-occurrence-rate-or-earthquake-number">2.6.2. How the parameter values are related to the earthquake occurrence rate or earthquake number</a></li>
-<li><a class="reference internal" href="#how-to-show-the-n-t-plot-the-cumulative-number-of-aftershocks-versus-time-compared-with-the-forecast-experimental">2.6.3. How to show the N-T plot (the cumulative number of aftershocks versus time), compared with the forecast (Experimental)</a></li>
+<li><a class="reference internal" href="#how-to-calculate-the-estimation-uncertainty">2.6.2. How to calculate the estimation uncertainty</a></li>
+<li><a class="reference internal" href="#how-the-parameter-values-are-related-to-the-earthquake-occurrence-rate-or-earthquake-number">2.6.3. How the parameter values are related to the earthquake occurrence rate or earthquake number</a></li>
+<li><a class="reference internal" href="#how-to-show-the-n-t-plot-the-cumulative-number-of-aftershocks-versus-time-compared-with-the-forecast-experimental">2.6.4. How to show the N-T plot (the cumulative number of aftershocks versus time), compared with the forecast (Experimental)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#aftfore-reference">2.7. AftFore Reference</a><ul>
@@ -268,15 +269,15 @@
 <div class="section" id="tips">
 <h2>2.6. Tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="how-to-extract-the-estimated-parameter-values">
-<span id="tips-param"></span><h3>2.6.1. How to extract the estimated parameter values<a class="headerlink" href="#how-to-extract-the-estimated-parameter-values" title="Permalink to this headline">¶</a></h3>
+<span id="tips-param1"></span><h3>2.6.1. How to extract the estimated parameter values<a class="headerlink" href="#how-to-extract-the-estimated-parameter-values" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><p>The estimated parameter values are stored in the object <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> (please see <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> for the detail).</p>
+<div><p>The estimated parameter values are stored in the object <code class="xref std std-var docutils literal"><span class="pre">param[&quot;para&quot;]</span></code> (please see also <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> for the detail).</p>
 <p>The MAP parameters:</p>
 <div class="highlight-Python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">beta</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;para&quot;</span><span class="p">][[</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;beta&quot;</span><span class="p">]]</span>
-<span class="k">print</span> <span class="s2">&quot;k: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">k</span>
-<span class="k">print</span> <span class="s2">&quot;p: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">p</span>
-<span class="k">print</span> <span class="s2">&quot;c: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">c</span>
-<span class="k">print</span> <span class="s2">&quot;beta: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">beta</span>
+<span class="k">print</span><span class="p">(</span> <span class="s2">&quot;k: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">k</span> <span class="p">)</span>
+<span class="k">print</span><span class="p">(</span> <span class="s2">&quot;p: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">p</span> <span class="p">)</span>
+<span class="k">print</span><span class="p">(</span> <span class="s2">&quot;c: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">c</span> <span class="p">)</span>
+<span class="k">print</span><span class="p">(</span> <span class="s2">&quot;beta: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">beta</span> <span class="p">)</span>
 
 <span class="sd">&quot;&quot;&quot; OUTPUT</span>
 <span class="sd">k: 0.021769</span>
@@ -289,8 +290,24 @@
 <p>Please also see the next tips for forecasting the aftershock activity from these parameters.</p>
 </div></blockquote>
 </div>
+<div class="section" id="how-to-calculate-the-estimation-uncertainty">
+<span id="tips-param2"></span><h3>2.6.2. How to calculate the estimation uncertainty<a class="headerlink" href="#how-to-calculate-the-estimation-uncertainty" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The sets of the parameters sampled from the posterior distribution is stored in the object <code class="xref std std-var docutils literal"><span class="pre">param[&quot;para_mcmc&quot;]</span></code> (please see also <a class="reference internal" href="#var-param"><code class="xref std std-var docutils literal"><span class="pre">param</span></code></a> for the detail). The estimation uncertainty can be obtained by</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;para_mcmc&quot;</span><span class="p">][[</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;beta&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot; OUTPUT</span>
+<span class="sd">k        0.008331</span>
+<span class="sd">p        0.068125</span>
+<span class="sd">c        0.006976</span>
+<span class="sd">beta     0.071577</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
 <div class="section" id="how-the-parameter-values-are-related-to-the-earthquake-occurrence-rate-or-earthquake-number">
-<h3>2.6.2. How the parameter values are related to the earthquake occurrence rate or earthquake number<a class="headerlink" href="#how-the-parameter-values-are-related-to-the-earthquake-occurrence-rate-or-earthquake-number" title="Permalink to this headline">¶</a></h3>
+<h3>2.6.3. How the parameter values are related to the earthquake occurrence rate or earthquake number<a class="headerlink" href="#how-the-parameter-values-are-related-to-the-earthquake-occurrence-rate-or-earthquake-number" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>In our model, the occurrence rate of an aftershock of magnithde <span class="math">\(M\)</span> at time <span class="math">\(t\)</span> is given by</p>
 <div class="math">
@@ -305,7 +322,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="how-to-show-the-n-t-plot-the-cumulative-number-of-aftershocks-versus-time-compared-with-the-forecast-experimental">
-<h3>2.6.3. How to show the N-T plot (the cumulative number of aftershocks versus time), compared with the forecast (Experimental)<a class="headerlink" href="#how-to-show-the-n-t-plot-the-cumulative-number-of-aftershocks-versus-time-compared-with-the-forecast-experimental" title="Permalink to this headline">¶</a></h3>
+<h3>2.6.4. How to show the N-T plot (the cumulative number of aftershocks versus time), compared with the forecast (Experimental)<a class="headerlink" href="#how-to-show-the-n-t-plot-the-cumulative-number-of-aftershocks-versus-time-compared-with-the-forecast-experimental" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>A function <code class="xref py py-func docutils literal"><span class="pre">NT_plot()</span></code> shows the time evolution of the cumulative number of aftershocks of <em>M &gt; mag_th</em> in the time interval [0, <em>t_test_end</em>], compared with the forecast. The confidence interval is evaluated in a Bayesian way, using the parameter sets sampled from the posterior distribution (para_mcmc in param).</p>
 <div class="highlight-Python"><div class="highlight"><pre><span></span><span class="c1"># parameter estimation</span>
@@ -407,7 +424,7 @@
 <dl class="var">
 <dt id="var-param">
 <code class="descname">param</code><a class="headerlink" href="#var-param" title="Permalink to this definition">¶</a></dt>
-<dd><p>A parameter object. Also see <a class="reference internal" href="#tips-param"><span class="std std-ref">How to extract the estimated parameter values</span></a>.</p>
+<dd><p>A parameter object. Also see <a class="reference internal" href="#tips-param1"><span class="std std-ref">How to extract the estimated parameter values</span></a> and <a class="reference internal" href="#tips-param2"><span class="std std-ref">How to calculate the estimation uncertainty</span></a>.</p>
 <blockquote>
 <div><p>param[“para”]: the MAP estimated parameters (pandas.Series)</p>
 <p>param[“para_mcmc”]: the parameter set sampled from the posterior distribution (pandas.DataFrame)</p>
@@ -539,7 +556,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, Takahiro Omi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
   </body>
 </html>
