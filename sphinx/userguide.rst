@@ -179,30 +179,47 @@ Forecast Generation
 Tips
 _____________________
 
-.. _tips-param:
+.. _tips-param1:
 
 How to extract the estimated parameter values
 ================================================
-	The estimated parameter values are stored in the object :var:`param` (please see :var:`param` for the detail).
+    The estimated parameter values are stored in the object :var:`param["para"]` (please see also :var:`param` for the detail).
 
-	The MAP parameters:
+    The MAP parameters:
 
-	.. code-block:: Python
+    .. code-block:: Python
 
-		[k,p,c,beta] = param["para"][["k", "p", "c", "beta"]]
-		print "k: %f" % k
-		print "p: %f" % p
-		print "c: %f" % c
-		print "beta: %f" % beta
+        [k,p,c,beta] = param["para"][["k", "p", "c", "beta"]]
+        print( "k: %f" % k )
+        print( "p: %f" % p )
+        print( "c: %f" % c )
+        print( "beta: %f" % beta )
 
-		""" OUTPUT
-		k: 0.021769
-		p: 1.037202
-		c: 0.015635
-		beta: 1.691913
-		"""
+        """ OUTPUT
+        k: 0.021769
+        p: 1.037202
+        c: 0.015635
+        beta: 1.691913
+        """
 
-	Please also see the next tips for forecasting the aftershock activity from these parameters.
+    Please also see the next tips for forecasting the aftershock activity from these parameters.
+
+.. _tips-param2:
+
+How to calculate the estimation uncertainty
+================================================
+    The sets of the parameters sampled from the posterior distribution is stored in the object :var:`param["para_mcmc"]` (please see also :var:`param` for the detail). The estimation uncertainty can be obtained by
+
+    .. code-block:: Python
+
+        print( param["para_mcmc"][["k", "p", "c", "beta"]].std() )
+
+        """ OUTPUT
+        k        0.008331
+        p        0.068125
+        c        0.006976
+        beta     0.071577
+        """
 
 How the parameter values are related to the earthquake occurrence rate or earthquake number
 ================================================================================================
@@ -289,15 +306,15 @@ Object
 
     .. var:: param
 
-        A parameter object. Also see :ref:`tips-param`.
+        A parameter object. Also see :ref:`tips-param1` and :ref:`tips-param2`.
 
-			param["para"]: the MAP estimated parameters (pandas.Series)
+            param["para"]: the MAP estimated parameters (pandas.Series)
 
-			param["para_mcmc"]: the parameter set sampled from the posterior distribution (pandas.DataFrame)
+            param["para_mcmc"]: the parameter set sampled from the posterior distribution (pandas.DataFrame)
 
-			param["mag_ref"]: the main shock magnitude
+            param["mag_ref"]: the main shock magnitude
 
-			param["t"]: the estimation period
+            param["t"]: the estimation period
 
     .. var:: prior
 
