@@ -408,8 +408,11 @@ def Graph_param(para_mcmc,newfig=True,pdf=False):
     p['log(sigma)'] = np.log(p['sigma'])
     
     para_list = ['log(k)','p','log(c)','beta']
-    
-    axs = pd.tools.plotting.scatter_matrix(p[para_list],alpha=1,figsize=(6,6),c=[0.7,0.7,0.7],linewidth=0,range_padding=0.5)
+
+    try:
+        axs = pd.plotting.scatter_matrix(p[para_list],alpha=1,figsize=(6,6),c=[0.7,0.7,0.7],linewidth=0,range_padding=0.5)
+    except:
+        axs = pd.tools.plotting.scatter_matrix(p[para_list],alpha=1,figsize=(6,6),c=[0.7,0.7,0.7],linewidth=0,range_padding=0.5)
 
     for i,x in enumerate(para_list):
         for j,y in enumerate(para_list):
