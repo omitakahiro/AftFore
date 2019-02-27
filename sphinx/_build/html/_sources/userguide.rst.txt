@@ -94,22 +94,23 @@ _____________________
 
         aft.EstFore(Data, t_learn, t_test)
 
-    This process takes about a few minutes. The forecast result (the number of earthquakes with :math:`M>M_t` in the testing period) is saved in :var:`fore.txt`.
+    This process takes about a few minutes. The forecast result (the number of earthquakes with :math:`M>M_t` in the testing period, and the probability to have at least one earthquake with :math:`M>M_t` in the testing period) is saved in :var:`fore.txt`.
 
     .. code-block:: none
 
-        # (M_t) (expected_number) (lower bound of 95% interval) (upper bound of 95% interval)
-        0.95         682.218         595         816
-        1.05         576.029         502         686
-        1.15         486.368         424         578
-        1.25         410.664         357         488
-        1.35         346.743         301         412
-        1.45         292.772         253         348
-        1.55         247.201         212         295
-        1.65         208.723         178         250
-        1.75         176.235         149         212
-        1.85         148.804         124         180
-        1.95         125.642         103         153
+        # (M_t) (expected_number) (lower bound of 95% interval) (upper bound of 95% interval) (probability)
+        0.95         682.218         564         832      1.0000
+        1.05         576.029         477         699      1.0000
+        1.15         486.368         403         589      1.0000
+        1.25         410.664         340         496      1.0000
+        1.35         346.743         287         419      1.0000
+        1.45         292.772         241         354      1.0000
+        1.55         247.201         202         300      1.0000
+        1.65         208.723         170         255      1.0000
+        1.75         176.235         142         217      1.0000
+        1.85         148.804         119         185      1.0000
+        1.95         125.642          99         158      1.0000
+        2.05         106.085          82         135      1.0000
         ...
 
     :py:func:`EstFore` also generates files, :var:`param.pkl`, :var:`param.pdf`, and :var:`fore.pdf`. See :ref:`genfiles` for the details.
@@ -390,22 +391,23 @@ Generated Files
 
     .. var:: fore.txt
 
-        A list of the target magnitude :math:`M_t`, the expected number of earthquakes in the testing period with :math:`M>M_t`, and its 95% confidencial interval.
+        A list of the target magnitude :math:`M_t`, the expected number of earthquakes in the testing period with :math:`M>M_t`, its 95% confidencial interval, the probability to have at least one earthquake with :math:`M>M_t` in the testing period.
 
     .. code-block:: none
 
-        # (M_t) (expected_number) (lower bound of 95% interval) (upper bound of 95% interval)
-        0.95         682.218         595         816
-        1.05         576.029         502         686
-        1.15         486.368         424         578
-        1.25         410.664         357         488
-        1.35         346.743         301         412
-        1.45         292.772         253         348
-        1.55         247.201         212         295
-        1.65         208.723         178         250
-        1.75         176.235         149         212
-        1.85         148.804         124         180
-        1.95         125.642         103         153
+        # (M_t) (expected_number) (lower bound of 95% interval) (upper bound of 95% interval) (probability)
+        0.95         682.218         564         832      1.0000
+        1.05         576.029         477         699      1.0000
+        1.15         486.368         403         589      1.0000
+        1.25         410.664         340         496      1.0000
+        1.35         346.743         287         419      1.0000
+        1.45         292.772         241         354      1.0000
+        1.55         247.201         202         300      1.0000
+        1.65         208.723         170         255      1.0000
+        1.75         176.235         142         217      1.0000
+        1.85         148.804         119         185      1.0000
+        1.95         125.642          99         158      1.0000
+        2.05         106.085          82         135      1.0000
         ...
 
     .. var:: fore.pdf
